@@ -1,0 +1,33 @@
+2	reserved word: read
+2	ID, name= x
+2	;
+3	reserved word: if
+3	NUM, val= 0
+3	<
+3	ID, name= x
+3	reserved word: then
+4	ID, name= fact
+4	:=
+4	NUM, val= 1
+4	;
+5	reserved word: repeat
+6	ID, name= fact
+6	:=
+6	ID, name= fact
+6	*
+6	ID, name= x
+6	;
+7	ID, name= x
+7	:=
+7	ID, name= x
+7	-
+7	NUM, val= 1
+8	reserved word: until
+8	ID, name= x
+8	=
+8	NUM, val= 0
+8	;
+9	reserved word: write
+9	ID, name= fact
+10	reserved word: end
+11	EOF
