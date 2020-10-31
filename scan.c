@@ -77,6 +77,7 @@ TokenType getToken() {
                 state = INID;
             }
             else if (c == ':') {
+                currString[name_pos++] = c;
                 state = INASSIGN;
             }
             else {
@@ -113,6 +114,7 @@ TokenType getToken() {
                     currToken = SEMI;
                     break;
                     default:
+                    currString[name_pos++] = c;
                     currToken = ERROR;
                 }
             }
@@ -156,6 +158,8 @@ TokenType getToken() {
             case DONE:
             break;
             default:
+            state = DONE;
+            currString[name_pos++] = c;
             currToken = ERROR;
         }
         if (state == DONE) {
@@ -170,7 +174,7 @@ TokenType getToken() {
 }
 
 void printResult(TokenType curr) {
-    printf("%d\t", line_no);
+    // printf("%d\t", line_no);
     switch(curr) {
         case IF:
         printf("reserved word: if\n");
@@ -240,7 +244,8 @@ void printResult(TokenType curr) {
         printf("EOF\n");
         break;
         case ERROR:
-        printf("%s", buffer);
+        printf("Error: %s\n", currString);
+        break;
         default:
         printf("Error\n");
     }
