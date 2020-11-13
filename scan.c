@@ -5,6 +5,8 @@
 
 #define MAX_BUF_SIZE 256
 #define MAX_STR_SIZE 50
+#define TEST_NEG
+// #define TEST_POS
 
 typedef enum {
     ENDFILE, ERROR,
@@ -256,7 +258,12 @@ void printResult(TokenType curr) {
     }
 }
 int main() {
+#ifdef TEST_NEG
     fp = fopen("neg.tny", "r");
+#endif
+#ifdef TEST_POS
+    fp = fopen("pos.tny", "r");
+#endif
     freopen("out", "w", stdout);
     TokenType curr = ERROR;
     while(curr != ENDFILE) {
