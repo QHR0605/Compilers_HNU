@@ -1,26 +1,14 @@
 { Sample program
- 17
   in TINY language -
- 21
   computes factorial
- 21
 }
- 2
 read x; { input an integer }
- 29
 if 0 < x then { don't compute if x <= 0 }
- 42
   fact := 1;
- 13
   repeat
- 9
-    fact := fact * x;
- 22
-    x := x - 1
- 15
+    fact := fact * (x / 3);
+    x := x - 1 + 0
   until x = 0;
- 15
   write fact  { output factorial of x }
- 40
+else write fact
 end
- 4

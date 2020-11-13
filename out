@@ -1,41 +1,20 @@
 reserved word: read
-(
-)
 ID, name= x
 ;
-reserved word: if
-NUM, val= 0
-<
-ID, name= x
-reserved word: then
-ID, name= fac
 Error: \
 Error: \
-Error: \
-ID, name= fact
+ID, name= str
 :=
-NUM, val= 1
-;
+Error: "
+ID, name= string
+Error: "
+ID, name= str
 Error: :
-NUM, val= 2
-reserved word: repeat
-ID, name= fact
-:=
-ID, name= fact
-*
-ID, name= x
-;
-ID, name= x
-:=
-ID, name= x
 -
-NUM, val= 1
-reserved word: until
-ID, name= x
-=
-NUM, val= 0
+NUM, val= 2
 ;
-reserved word: write
-ID, name= fact
-reserved word: end
+ID, name= w
+ID, name= ww
+ID, name= str
+NUM, val= 123
 EOF

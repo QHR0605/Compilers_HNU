@@ -1,9 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 #include <string.h>
-#include "globals.h"
 
 #define MAX_BUF_SIZE 256
 #define MAX_STR_SIZE 50
+
+typedef enum {
+    ENDFILE, ERROR,
+    IF, THEN, ELSE, END, REPEAT, UNTIL, READ, WRITE,
+    PLUS, MINUS, TIMES, DIVIDE, EQULE, LE, LB, RB, SEMI, ASSIGN,
+    NUM, ID
+}TokenType;
 typedef enum {
     START, INNUM, INID, INASSIGN, DONE, INCOMMENT
 }StateType;
@@ -19,8 +27,6 @@ int buf_size = 0;
 char buffer[MAX_BUF_SIZE];
 int name_pos = 0;
 char currString[MAX_STR_SIZE];
-int line_no = 1;
-int save;
 FILE *fp;
 
 int getNext() {
@@ -60,7 +66,6 @@ TokenType getToken() {
         switch(state) {
             case START:
             if (c == ' ' || c == '\t' || c == '\n') {
-                if (c == '\n') line_no++;
                 state = START;
             }
             else if (c == '{') {
@@ -251,7 +256,7 @@ void printResult(TokenType curr) {
     }
 }
 int main() {
-    fp = fopen("sample.tny", "r");
+    fp = fopen("neg.tny", "r");
     freopen("out", "w", stdout);
     TokenType curr = ERROR;
     while(curr != ENDFILE) {
