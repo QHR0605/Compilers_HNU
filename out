@@ -1,20 +1,30 @@
-reserved word: read
-ID, name= x
-;
-Error: \
-Error: \
-ID, name= str
-:=
-Error: "
-ID, name= string
-Error: "
-ID, name= str
-Error: :
--
-NUM, val= 2
-;
-ID, name= w
-ID, name= ww
-ID, name= str
-NUM, val= 123
-EOF
+Line 1: {
+Line 2:     if x = fact then
+Line 3:     end
+Line 4: }
+Line 5: read x;
+	5: 	reserved word: read
+	5: 	ID, name= x
+	5: 	;
+Line 6: \\
+	6: 	Error: \
+	6: 	Error: \
+Line 7: str := "string"
+	7: 	ID, name= str
+	7: 	:=
+	7: 	Error: "
+	7: 	ID, name= string
+	7: 	Error: "
+Line 8: str :- 2;
+	8: 	ID, name= str
+	8: 	Error: :
+	8: 	-
+	8: 	NUM, val= 2
+	8: 	;
+Line 9: w  ww
+	9: 	ID, name= w
+	9: 	ID, name= ww
+Line 10: str123
+	10: 	ID, name= str
+	10: 	NUM, val= 123
+	11: 	EOF

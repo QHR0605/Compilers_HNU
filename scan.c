@@ -5,7 +5,7 @@
 
 #define MAX_BUF_SIZE 256
 #define MAX_STR_SIZE 50
-#define TEST_NEG
+#define TEST_NEG1
 // #define TEST_POS
 
 typedef enum {
@@ -25,29 +25,30 @@ struct {
 {{"if",IF},{"then",THEN},{"else",ELSE},{"end",END},
 {"repeat",REPEAT},{"until",UNTIL},{"read",READ},{"write",WRITE}};
 
-int buf_size = 0;
+int buf_size = 0, buf_pos = 0;
 char buffer[MAX_BUF_SIZE];
 int name_pos = 0;
+int line_no = 0;
 char currString[MAX_STR_SIZE];
 FILE *fp;
 
 int getNext() {
-    int c;
-    if (buf_size == 0) {
-        c = getc(fp);
+    if (buf_pos >= buf_size) {
+        line_no++;
+        if (fgets(buffer, MAX_BUF_SIZE - 1, fp)) {
+            printf("Line %d: %s", line_no, buffer);
+            buf_size = strlen(buffer);
+            buf_pos = 0;
+            return buffer[buf_pos++];
+        }
+        else return EOF;
     }
     else {
-        c = buffer[0];
-        int i;
-        for (i = 0; i < buf_size; i++) {
-            buffer[i] = buffer[i + 1];
-        }
-        buf_size--;
+        return buffer[buf_pos++];
     }
-    return c;
 }
 void backtrace(char c) {
-    buffer[buf_size++] = c;
+    buf_pos--;
 }
 TokenType getRealToken() {
     int i;
@@ -181,7 +182,7 @@ TokenType getToken() {
 }
 
 void printResult(TokenType curr) {
-    // printf("%d\t", line_no);
+    printf("\t%d: \t", line_no);
     switch(curr) {
         case IF:
         printf("reserved word: if\n");
@@ -258,8 +259,11 @@ void printResult(TokenType curr) {
     }
 }
 int main() {
-#ifdef TEST_NEG
-    fp = fopen("neg.tny", "r");
+#ifdef TEST_NEG1
+    fp = fopen("neg1.tny", "r");
+#endif
+#ifdef TEST_NEG2
+    fp = fopen("neg2.tny", "r");
 #endif
 #ifdef TEST_POS
     fp = fopen("pos.tny", "r");

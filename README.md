@@ -4,8 +4,10 @@ __scan.c__ 程序文件
 ```c
 // 启用正例pos.tny
 #define TEST_POS
-// 启用反例neg.tny
-#define TEST_NEG
+// 启用反例neg1.tny
+#define TEST_NEG1
+// 启用反例neg2.tny
+#define TEST_NEG2
 ```
 仅能声明一个
 
