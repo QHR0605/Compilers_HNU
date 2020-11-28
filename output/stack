@@ -2,10 +2,32 @@ program
 ---------------
 Token = reserved word: read
 
+resize!
+program reserved word: read
+end-resize!
+program = name
+0 2
+
+2
+1
+father: program
+stmt-sequence read 
+
 stmt-sequence
 EOF
 ---------------
 Token = reserved word: read
+
+resize!
+stmt-sequence reserved word: read
+end-resize!
+stmt-sequence = name
+0 2
+
+2
+1
+father: stmt-sequence
+statement stmt' 
 
 statement
 stmt'
@@ -13,11 +35,32 @@ EOF
 ---------------
 Token = reserved word: read
 
+resize!
+statement reserved word: read
+end-resize!
+statement = name
+0 1
+
+1
+father: statement
+read-stmt 
+
 read-stmt
 stmt'
 EOF
 ---------------
 Token = reserved word: read
+
+resize!
+read-stmt reserved word: read
+end-resize!
+read-stmt = name
+0 2
+
+2
+1
+father: read-stmt
+read identifier 
 
 read
 identifier
@@ -26,16 +69,40 @@ EOF
 ---------------
 Token = reserved word: read
 
+read = name
+0 0
+
 identifier
 stmt'
 EOF
 ---------------
 Token = ID, name= x
 
+identifier = name
+0 0
+
+back...
+read-stmt
+2 2
+statement
+1 1
+done! 
 stmt'
 EOF
 ---------------
 Token = ;
+
+resize!
+stmt' ;
+end-resize!
+stmt' = name
+0 3
+
+3
+2
+1
+father: stmt'
+ statement stmt' 
 
 ;
 statement
@@ -44,13 +111,3417 @@ EOF
 ---------------
 Token = ;
 
+ = name
+0 0
+
+back...
+done! 
 statement
 stmt'
 EOF
 ---------------
-Token = Error: \
+Token = reserved word: if
 
-ERROR!
-now token: 1
-nonterminal: statement
-top token: Error: \
+resize!
+statement reserved word: if
+end-resize!
+statement = name
+0 1
+
+1
+father: statement
+if-stmt 
+
+if-stmt
+stmt'
+EOF
+---------------
+Token = reserved word: if
+
+resize!
+if-stmt reserved word: if
+end-resize!
+if-stmt = name
+0 6
+
+6
+5
+4
+3
+2
+1
+father: if-stmt
+if exp then stmt-sequence else-part' end 
+
+if
+exp
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: if
+
+if = name
+0 0
+
+back...
+done! 
+exp
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 0
+
+resize!
+exp NUM, val= 0
+end-resize!
+exp = name
+0 2
+
+2
+1
+father: exp
+simple-exp cmp-exp' 
+
+simple-exp
+cmp-exp'
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 0
+
+resize!
+simple-exp NUM, val= 0
+end-resize!
+simple-exp = name
+0 2
+
+2
+1
+father: simple-exp
+term simple-exp' 
+
+term
+simple-exp'
+cmp-exp'
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 0
+
+resize!
+term NUM, val= 0
+end-resize!
+term = name
+0 2
+
+2
+1
+father: term
+factor term' 
+
+factor
+term'
+simple-exp'
+cmp-exp'
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 0
+
+resize!
+factor NUM, val= 0
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+0 
+
+number
+term'
+simple-exp'
+cmp-exp'
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 0
+
+0 = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+cmp-exp'
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = <
+
+resize!
+term' <
+end-resize!
+term' = name
+0 0
+
+1
+father: term'
+
+
+back...
+term'
+0 0
+term
+2 2
+done! 
+now at simple-exp'
+simple-exp'
+cmp-exp'
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = <
+
+resize!
+simple-exp' <
+end-resize!
+simple-exp' = name
+0 0
+
+1
+father: simple-exp'
+
+
+back...
+simple-exp'
+0 0
+simple-exp
+2 2
+done! 
+now at cmp-exp'
+cmp-exp'
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = <
+
+resize!
+cmp-exp' <
+end-resize!
+cmp-exp' = name
+0 2
+
+2
+1
+father: cmp-exp'
+comparison-op simple-exp 
+
+comparison-op
+simple-exp
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = <
+
+resize!
+comparison-op <
+end-resize!
+comparison-op = name
+0 1
+
+1
+father: comparison-op
+ 
+
+<
+simple-exp
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = <
+
+ = name
+0 0
+
+back...
+comparison-op
+1 1
+done! 
+simple-exp
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+simple-exp ID, name= x
+end-resize!
+simple-exp = name
+0 2
+
+2
+1
+father: simple-exp
+term simple-exp' 
+
+term
+simple-exp'
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+term ID, name= x
+end-resize!
+term = name
+0 2
+
+2
+1
+father: term
+factor term' 
+
+factor
+term'
+simple-exp'
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+factor ID, name= x
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+identifier 
+
+identifier
+term'
+simple-exp'
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= identifier
+
+identifier = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: then
+
+resize!
+term' reserved word: then
+end-resize!
+term' = name
+0 0
+
+1
+father: term'
+
+
+back...
+term'
+0 0
+term
+2 2
+done! 
+now at simple-exp'
+simple-exp'
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: then
+
+resize!
+simple-exp' reserved word: then
+end-resize!
+simple-exp' = name
+0 0
+
+1
+father: simple-exp'
+
+
+back...
+simple-exp'
+0 0
+simple-exp
+2 2
+cmp-exp'
+2 2
+exp
+2 2
+done! 
+now at then
+then
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: then
+
+then = name
+0 0
+
+back...
+done! 
+stmt-sequence
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+stmt-sequence ID, name= fact
+end-resize!
+stmt-sequence = name
+0 2
+
+2
+1
+father: stmt-sequence
+statement stmt' 
+
+statement
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+statement ID, name= fact
+end-resize!
+statement = name
+0 1
+
+1
+father: statement
+assign-stmt 
+
+assign-stmt
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+assign-stmt ID, name= fact
+end-resize!
+assign-stmt = name
+0 3
+
+3
+2
+1
+father: assign-stmt
+identifier : exp 
+
+identifier
+:=
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= identifier
+
+identifier = name
+0 0
+
+:=
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = :=
+
+: = name
+0 0
+
+back...
+done! 
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 1
+
+resize!
+exp NUM, val= 1
+end-resize!
+exp = name
+0 2
+
+2
+1
+father: exp
+simple-exp cmp-exp' 
+
+simple-exp
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 1
+
+resize!
+simple-exp NUM, val= 1
+end-resize!
+simple-exp = name
+0 2
+
+2
+1
+father: simple-exp
+term simple-exp' 
+
+term
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 1
+
+resize!
+term NUM, val= 1
+end-resize!
+term = name
+0 2
+
+2
+1
+father: term
+factor term' 
+
+factor
+term'
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 1
+
+resize!
+factor NUM, val= 1
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+1 
+
+number
+term'
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 1
+
+1 = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+resize!
+term' ;
+end-resize!
+term' = name
+0 0
+
+1
+father: term'
+
+
+back...
+term'
+0 0
+term
+2 2
+done! 
+now at simple-exp'
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+resize!
+simple-exp' ;
+end-resize!
+simple-exp' = name
+0 0
+
+1
+father: simple-exp'
+
+
+back...
+simple-exp'
+0 0
+simple-exp
+2 2
+done! 
+now at cmp-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+resize!
+cmp-exp' ;
+end-resize!
+cmp-exp' = name
+0 0
+
+1
+father: cmp-exp'
+
+
+back...
+cmp-exp'
+0 0
+exp
+2 2
+assign-stmt
+3 3
+statement
+1 1
+done! 
+now at stmt'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+resize!
+stmt' ;
+end-resize!
+stmt' = name
+0 3
+
+3
+2
+1
+father: stmt'
+ statement stmt' 
+
+;
+statement
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+ = name
+0 0
+
+back...
+done! 
+statement
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: repeat
+
+resize!
+statement reserved word: repeat
+end-resize!
+statement = name
+0 1
+
+1
+father: statement
+repeat-stmt 
+
+repeat-stmt
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: repeat
+
+resize!
+repeat-stmt reserved word: repeat
+end-resize!
+repeat-stmt = name
+0 4
+
+4
+3
+2
+1
+father: repeat-stmt
+repeat stmt-sequence until exp 
+
+repeat
+stmt-sequence
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: repeat
+
+repeat = name
+0 0
+
+back...
+done! 
+stmt-sequence
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+stmt-sequence ID, name= fact
+end-resize!
+stmt-sequence = name
+0 2
+
+2
+1
+father: stmt-sequence
+statement stmt' 
+
+statement
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+statement ID, name= fact
+end-resize!
+statement = name
+0 1
+
+1
+father: statement
+assign-stmt 
+
+assign-stmt
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+assign-stmt ID, name= fact
+end-resize!
+assign-stmt = name
+0 3
+
+3
+2
+1
+father: assign-stmt
+identifier : exp 
+
+identifier
+:=
+exp
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= identifier
+
+identifier = name
+0 0
+
+:=
+exp
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = :=
+
+: = name
+0 0
+
+back...
+done! 
+exp
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+exp ID, name= fact
+end-resize!
+exp = name
+0 2
+
+2
+1
+father: exp
+simple-exp cmp-exp' 
+
+simple-exp
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+simple-exp ID, name= fact
+end-resize!
+simple-exp = name
+0 2
+
+2
+1
+father: simple-exp
+term simple-exp' 
+
+term
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+term ID, name= fact
+end-resize!
+term = name
+0 2
+
+2
+1
+father: term
+factor term' 
+
+factor
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+factor ID, name= fact
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+identifier 
+
+identifier
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= identifier
+
+identifier = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = *
+
+resize!
+term' *
+end-resize!
+term' = name
+0 3
+
+3
+2
+1
+father: term'
+mulop factor term' 
+
+mulop
+factor
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = *
+
+resize!
+mulop *
+end-resize!
+mulop = name
+0 1
+
+1
+father: mulop
+ 
+
+*
+factor
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = *
+
+ = name
+0 0
+
+back...
+mulop
+1 1
+done! 
+factor
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = (
+
+resize!
+factor (
+end-resize!
+factor = name
+0 3
+
+3
+2
+1
+father: factor
+ exp  
+
+(
+exp
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = (
+
+ = name
+0 0
+
+back...
+done! 
+exp
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+exp ID, name= x
+end-resize!
+exp = name
+0 2
+
+2
+1
+father: exp
+simple-exp cmp-exp' 
+
+simple-exp
+cmp-exp'
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+simple-exp ID, name= x
+end-resize!
+simple-exp = name
+0 2
+
+2
+1
+father: simple-exp
+term simple-exp' 
+
+term
+simple-exp'
+cmp-exp'
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+term ID, name= x
+end-resize!
+term = name
+0 2
+
+2
+1
+father: term
+factor term' 
+
+factor
+term'
+simple-exp'
+cmp-exp'
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+factor ID, name= x
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+identifier 
+
+identifier
+term'
+simple-exp'
+cmp-exp'
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= identifier
+
+identifier = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+cmp-exp'
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = /
+
+resize!
+term' /
+end-resize!
+term' = name
+0 3
+
+3
+2
+1
+father: term'
+mulop factor term' 
+
+mulop
+factor
+term'
+simple-exp'
+cmp-exp'
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = /
+
+resize!
+mulop /
+end-resize!
+mulop = name
+0 1
+
+1
+father: mulop
+ 
+
+/
+factor
+term'
+simple-exp'
+cmp-exp'
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = /
+
+ = name
+0 0
+
+back...
+mulop
+1 1
+done! 
+factor
+term'
+simple-exp'
+cmp-exp'
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 3
+
+resize!
+factor NUM, val= 3
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+3 
+
+number
+term'
+simple-exp'
+cmp-exp'
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 3
+
+3 = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+cmp-exp'
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = )
+
+resize!
+term' )
+end-resize!
+term' = name
+0 0
+
+1
+father: term'
+
+
+back...
+term'
+0 0
+term'
+3 3
+term
+2 2
+done! 
+now at simple-exp'
+simple-exp'
+cmp-exp'
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = )
+
+resize!
+simple-exp' )
+end-resize!
+simple-exp' = name
+0 0
+
+1
+father: simple-exp'
+
+
+back...
+simple-exp'
+0 0
+simple-exp
+2 2
+done! 
+now at cmp-exp'
+cmp-exp'
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = )
+
+resize!
+cmp-exp' )
+end-resize!
+cmp-exp' = name
+0 0
+
+1
+father: cmp-exp'
+
+
+back...
+cmp-exp'
+0 0
+exp
+2 2
+done! 
+now at 
+)
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = )
+
+ = name
+0 0
+
+back...
+factor
+3 3
+done! 
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+resize!
+term' ;
+end-resize!
+term' = name
+0 0
+
+1
+father: term'
+
+
+back...
+term'
+0 0
+term'
+3 3
+term
+2 2
+done! 
+now at simple-exp'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+resize!
+simple-exp' ;
+end-resize!
+simple-exp' = name
+0 0
+
+1
+father: simple-exp'
+
+
+back...
+simple-exp'
+0 0
+simple-exp
+2 2
+done! 
+now at cmp-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+resize!
+cmp-exp' ;
+end-resize!
+cmp-exp' = name
+0 0
+
+1
+father: cmp-exp'
+
+
+back...
+cmp-exp'
+0 0
+exp
+2 2
+assign-stmt
+3 3
+statement
+1 1
+done! 
+now at stmt'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+resize!
+stmt' ;
+end-resize!
+stmt' = name
+0 3
+
+3
+2
+1
+father: stmt'
+ statement stmt' 
+
+;
+statement
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+ = name
+0 0
+
+back...
+done! 
+statement
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+statement ID, name= x
+end-resize!
+statement = name
+0 1
+
+1
+father: statement
+assign-stmt 
+
+assign-stmt
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+assign-stmt ID, name= x
+end-resize!
+assign-stmt = name
+0 3
+
+3
+2
+1
+father: assign-stmt
+identifier : exp 
+
+identifier
+:=
+exp
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= identifier
+
+identifier = name
+0 0
+
+:=
+exp
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = :=
+
+: = name
+0 0
+
+back...
+done! 
+exp
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+exp ID, name= x
+end-resize!
+exp = name
+0 2
+
+2
+1
+father: exp
+simple-exp cmp-exp' 
+
+simple-exp
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+simple-exp ID, name= x
+end-resize!
+simple-exp = name
+0 2
+
+2
+1
+father: simple-exp
+term simple-exp' 
+
+term
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+term ID, name= x
+end-resize!
+term = name
+0 2
+
+2
+1
+father: term
+factor term' 
+
+factor
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+factor ID, name= x
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+identifier 
+
+identifier
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= identifier
+
+identifier = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = -
+
+resize!
+term' -
+end-resize!
+term' = name
+0 0
+
+1
+father: term'
+
+
+back...
+term'
+0 0
+term
+2 2
+done! 
+now at simple-exp'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = -
+
+resize!
+simple-exp' -
+end-resize!
+simple-exp' = name
+0 3
+
+3
+2
+1
+father: simple-exp'
+addop term simple-exp' 
+
+addop
+term
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = -
+
+resize!
+addop -
+end-resize!
+addop = name
+0 1
+
+1
+father: addop
+ 
+
+-
+term
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = -
+
+ = name
+0 0
+
+back...
+addop
+1 1
+done! 
+term
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 1
+
+resize!
+term NUM, val= 1
+end-resize!
+term = name
+0 2
+
+2
+1
+father: term
+factor term' 
+
+factor
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 1
+
+resize!
+factor NUM, val= 1
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+1 
+
+number
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 1
+
+1 = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = +
+
+resize!
+term' +
+end-resize!
+term' = name
+0 0
+
+1
+father: term'
+
+
+back...
+term'
+0 0
+term
+2 2
+done! 
+now at simple-exp'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = +
+
+resize!
+simple-exp' +
+end-resize!
+simple-exp' = name
+0 3
+
+3
+2
+1
+father: simple-exp'
+addop term simple-exp' 
+
+addop
+term
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = +
+
+resize!
+addop +
+end-resize!
+addop = name
+0 1
+
+1
+father: addop
+ 
+
++
+term
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = +
+
+ = name
+0 0
+
+back...
+addop
+1 1
+done! 
+term
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 0
+
+resize!
+term NUM, val= 0
+end-resize!
+term = name
+0 2
+
+2
+1
+father: term
+factor term' 
+
+factor
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 0
+
+resize!
+factor NUM, val= 0
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+0 
+
+number
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 0
+
+0 = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: until
+
+resize!
+term' reserved word: until
+end-resize!
+term' = name
+0 0
+
+1
+father: term'
+
+
+back...
+term'
+0 0
+term
+2 2
+done! 
+now at simple-exp'
+simple-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: until
+
+resize!
+simple-exp' reserved word: until
+end-resize!
+simple-exp' = name
+0 0
+
+1
+father: simple-exp'
+
+
+back...
+simple-exp'
+0 0
+simple-exp'
+3 3
+simple-exp'
+3 3
+simple-exp
+2 2
+done! 
+now at cmp-exp'
+cmp-exp'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: until
+
+resize!
+cmp-exp' reserved word: until
+end-resize!
+cmp-exp' = name
+0 0
+
+1
+father: cmp-exp'
+
+
+back...
+cmp-exp'
+0 0
+exp
+2 2
+assign-stmt
+3 3
+statement
+1 1
+done! 
+now at stmt'
+stmt'
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: until
+
+resize!
+stmt' reserved word: until
+end-resize!
+stmt' = name
+0 0
+
+1
+father: stmt'
+
+
+back...
+stmt'
+0 0
+stmt'
+3 3
+stmt-sequence
+2 2
+done! 
+now at until
+until
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: until
+
+until = name
+0 0
+
+back...
+done! 
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+exp ID, name= x
+end-resize!
+exp = name
+0 2
+
+2
+1
+father: exp
+simple-exp cmp-exp' 
+
+simple-exp
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+simple-exp ID, name= x
+end-resize!
+simple-exp = name
+0 2
+
+2
+1
+father: simple-exp
+term simple-exp' 
+
+term
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+term ID, name= x
+end-resize!
+term = name
+0 2
+
+2
+1
+father: term
+factor term' 
+
+factor
+term'
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+resize!
+factor ID, name= x
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+identifier 
+
+identifier
+term'
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= identifier
+
+identifier = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = =
+
+resize!
+term' =
+end-resize!
+term' = name
+0 0
+
+1
+father: term'
+
+
+back...
+term'
+0 0
+term
+2 2
+done! 
+now at simple-exp'
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = =
+
+resize!
+simple-exp' =
+end-resize!
+simple-exp' = name
+0 0
+
+1
+father: simple-exp'
+
+
+back...
+simple-exp'
+0 0
+simple-exp
+2 2
+done! 
+now at cmp-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = =
+
+resize!
+cmp-exp' =
+end-resize!
+cmp-exp' = name
+0 2
+
+2
+1
+father: cmp-exp'
+comparison-op simple-exp 
+
+comparison-op
+simple-exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = =
+
+resize!
+comparison-op =
+end-resize!
+comparison-op = name
+0 1
+
+1
+father: comparison-op
+ 
+
+=
+simple-exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = =
+
+ = name
+0 0
+
+back...
+comparison-op
+1 1
+done! 
+simple-exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 0
+
+resize!
+simple-exp NUM, val= 0
+end-resize!
+simple-exp = name
+0 2
+
+2
+1
+father: simple-exp
+term simple-exp' 
+
+term
+simple-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 0
+
+resize!
+term NUM, val= 0
+end-resize!
+term = name
+0 2
+
+2
+1
+father: term
+factor term' 
+
+factor
+term'
+simple-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 0
+
+resize!
+factor NUM, val= 0
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+0 
+
+number
+term'
+simple-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = NUM, val= 0
+
+0 = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+resize!
+term' ;
+end-resize!
+term' = name
+0 0
+
+1
+father: term'
+
+
+back...
+term'
+0 0
+term
+2 2
+done! 
+now at simple-exp'
+simple-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+resize!
+simple-exp' ;
+end-resize!
+simple-exp' = name
+0 0
+
+1
+father: simple-exp'
+
+
+back...
+simple-exp'
+0 0
+simple-exp
+2 2
+cmp-exp'
+2 2
+exp
+2 2
+repeat-stmt
+4 4
+statement
+1 1
+done! 
+now at stmt'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+resize!
+stmt' ;
+end-resize!
+stmt' = name
+0 3
+
+3
+2
+1
+father: stmt'
+ statement stmt' 
+
+;
+statement
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ;
+
+ = name
+0 0
+
+back...
+done! 
+statement
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: write
+
+resize!
+statement reserved word: write
+end-resize!
+statement = name
+0 1
+
+1
+father: statement
+write-stmt 
+
+write-stmt
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: write
+
+resize!
+write-stmt reserved word: write
+end-resize!
+write-stmt = name
+0 2
+
+2
+1
+father: write-stmt
+write exp 
+
+write
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: write
+
+write = name
+0 0
+
+back...
+done! 
+exp
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+exp ID, name= fact
+end-resize!
+exp = name
+0 2
+
+2
+1
+father: exp
+simple-exp cmp-exp' 
+
+simple-exp
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+simple-exp ID, name= fact
+end-resize!
+simple-exp = name
+0 2
+
+2
+1
+father: simple-exp
+term simple-exp' 
+
+term
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+term ID, name= fact
+end-resize!
+term = name
+0 2
+
+2
+1
+father: term
+factor term' 
+
+factor
+term'
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+factor ID, name= fact
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+identifier 
+
+identifier
+term'
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= identifier
+
+identifier = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: else
+
+resize!
+term' reserved word: else
+end-resize!
+term' = name
+0 0
+
+1
+father: term'
+
+
+back...
+term'
+0 0
+term
+2 2
+done! 
+now at simple-exp'
+simple-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: else
+
+resize!
+simple-exp' reserved word: else
+end-resize!
+simple-exp' = name
+0 0
+
+1
+father: simple-exp'
+
+
+back...
+simple-exp'
+0 0
+simple-exp
+2 2
+done! 
+now at cmp-exp'
+cmp-exp'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: else
+
+resize!
+cmp-exp' reserved word: else
+end-resize!
+cmp-exp' = name
+0 0
+
+1
+father: cmp-exp'
+
+
+back...
+cmp-exp'
+0 0
+exp
+2 2
+write-stmt
+2 2
+statement
+1 1
+done! 
+now at stmt'
+stmt'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: else
+
+resize!
+stmt' reserved word: else
+end-resize!
+stmt' = name
+0 0
+
+1
+father: stmt'
+
+
+back...
+stmt'
+0 0
+stmt'
+3 3
+stmt'
+3 3
+stmt-sequence
+2 2
+done! 
+now at else-part'
+else-part'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: else
+
+resize!
+else-part' reserved word: else
+end-resize!
+else-part' = name
+0 2
+
+2
+1
+father: else-part'
+else stmt-sequence 
+
+else
+stmt-sequence
+end
+stmt'
+EOF
+---------------
+Token = reserved word: else
+
+else = name
+0 0
+
+back...
+done! 
+stmt-sequence
+end
+stmt'
+EOF
+---------------
+Token = reserved word: write
+
+resize!
+stmt-sequence reserved word: write
+end-resize!
+stmt-sequence = name
+0 2
+
+2
+1
+father: stmt-sequence
+statement stmt' 
+
+statement
+stmt'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: write
+
+resize!
+statement reserved word: write
+end-resize!
+statement = name
+0 1
+
+1
+father: statement
+write-stmt 
+
+write-stmt
+stmt'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: write
+
+resize!
+write-stmt reserved word: write
+end-resize!
+write-stmt = name
+0 2
+
+2
+1
+father: write-stmt
+write exp 
+
+write
+exp
+stmt'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: write
+
+write = name
+0 0
+
+back...
+done! 
+exp
+stmt'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+exp ID, name= fact
+end-resize!
+exp = name
+0 2
+
+2
+1
+father: exp
+simple-exp cmp-exp' 
+
+simple-exp
+cmp-exp'
+stmt'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+simple-exp ID, name= fact
+end-resize!
+simple-exp = name
+0 2
+
+2
+1
+father: simple-exp
+term simple-exp' 
+
+term
+simple-exp'
+cmp-exp'
+stmt'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+term ID, name= fact
+end-resize!
+term = name
+0 2
+
+2
+1
+father: term
+factor term' 
+
+factor
+term'
+simple-exp'
+cmp-exp'
+stmt'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= fact
+
+resize!
+factor ID, name= fact
+end-resize!
+factor = name
+0 1
+
+1
+father: factor
+identifier 
+
+identifier
+term'
+simple-exp'
+cmp-exp'
+stmt'
+end
+stmt'
+EOF
+---------------
+Token = ID, name= identifier
+
+identifier = name
+0 0
+
+back...
+factor
+1 1
+done! 
+term'
+simple-exp'
+cmp-exp'
+stmt'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: end
+
+resize!
+term' reserved word: end
+end-resize!
+term' = name
+0 0
+
+1
+father: term'
+
+
+back...
+term'
+0 0
+term
+2 2
+done! 
+now at simple-exp'
+simple-exp'
+cmp-exp'
+stmt'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: end
+
+resize!
+simple-exp' reserved word: end
+end-resize!
+simple-exp' = name
+0 0
+
+1
+father: simple-exp'
+
+
+back...
+simple-exp'
+0 0
+simple-exp
+2 2
+done! 
+now at cmp-exp'
+cmp-exp'
+stmt'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: end
+
+resize!
+cmp-exp' reserved word: end
+end-resize!
+cmp-exp' = name
+0 0
+
+1
+father: cmp-exp'
+
+
+back...
+cmp-exp'
+0 0
+exp
+2 2
+write-stmt
+2 2
+statement
+1 1
+done! 
+now at stmt'
+stmt'
+end
+stmt'
+EOF
+---------------
+Token = reserved word: end
+
+resize!
+stmt' reserved word: end
+end-resize!
+stmt' = name
+0 0
+
+1
+father: stmt'
+
+
+back...
+stmt'
+0 0
+stmt-sequence
+2 2
+else-part'
+2 2
+done! 
+now at end
+end
+stmt'
+EOF
+---------------
+Token = reserved word: end
+
+end = name
+0 0
+
+back...
+if-stmt
+6 6
+statement
+1 1
+done! 
+stmt'
+EOF
+---------------
+Token = EOF
+
+resize!
+stmt' EOF
+end-resize!
+stmt' = name
+0 0
+
+1
+father: stmt'
+
+
+back...
+stmt'
+0 0
+stmt'
+3 3
+stmt-sequence
+2 2
+done! 
+now at read
+EOF
+---------------
+Token = EOF
+
+read = name
+0 0
+
+back...
+done! 
+YES

@@ -3,9 +3,154 @@
 				|statement
 						|read-stmt
 								|reserved word: read
-								|ID, name= \
+								|ID, name= 
 				|stmt'
 						|;
 						|statement
+								|if-stmt
+										|reserved word: if
+										|exp
+												|simple-exp
+														|term
+																|factor
+																		|NUM, val= 
+																|term'
+														|simple-exp'
+												|cmp-exp'
+														|comparison-op
+																|<
+														|simple-exp
+																|term
+																		|factor
+																				|ID, name= 
+																		|term'
+																|simple-exp'
+										|reserved word: then
+										|stmt-sequence
+												|statement
+														|assign-stmt
+																|ID, name= 
+																|:=
+																|exp
+																		|simple-exp
+																				|term
+																						|factor
+																								|NUM, val= 
+																						|term'
+																				|simple-exp'
+																		|cmp-exp'
+												|stmt'
+														|;
+														|statement
+																|repeat-stmt
+																		|reserved word: repeat
+																		|stmt-sequence
+																				|statement
+																						|assign-stmt
+																								|ID, name= 
+																								|:=
+																								|exp
+																										|simple-exp
+																												|term
+																														|factor
+																																|ID, name= 
+																														|term'
+																																|mulop
+																																		|*
+																																|factor
+																																		|(
+																																		|exp
+																																				|simple-exp
+																																						|term
+																																								|factor
+																																										|ID, name= 
+																																								|term'
+																																										|mulop
+																																												|/
+																																										|factor
+																																												|NUM, val= 
+																																										|term'
+																																						|simple-exp'
+																																				|cmp-exp'
+																																		|)
+																																|term'
+																												|simple-exp'
+																										|cmp-exp'
+																				|stmt'
+																						|;
+																						|statement
+																								|assign-stmt
+																										|ID, name= 
+																										|:=
+																										|exp
+																												|simple-exp
+																														|term
+																																|factor
+																																		|ID, name= 
+																																|term'
+																														|simple-exp'
+																																|addop
+																																		|-
+																																|term
+																																		|factor
+																																				|NUM, val= 
+																																		|term'
+																																|simple-exp'
+																																		|addop
+																																				|+
+																																		|term
+																																				|factor
+																																						|NUM, val= 
+																																				|term'
+																																		|simple-exp'
+																												|cmp-exp'
+																						|stmt'
+																		|reserved word: until
+																		|exp
+																				|simple-exp
+																						|term
+																								|factor
+																										|ID, name= 
+																								|term'
+																						|simple-exp'
+																				|cmp-exp'
+																						|comparison-op
+																								|=
+																						|simple-exp
+																								|term
+																										|factor
+																												|NUM, val= 
+																										|term'
+																								|simple-exp'
+														|stmt'
+																|;
+																|statement
+																		|write-stmt
+																				|reserved word: write
+																				|exp
+																						|simple-exp
+																								|term
+																										|factor
+																												|ID, name= 
+																										|term'
+																								|simple-exp'
+																						|cmp-exp'
+																|stmt'
+										|else-part'
+												|reserved word: else
+												|stmt-sequence
+														|statement
+																|write-stmt
+																		|reserved word: write
+																		|exp
+																				|simple-exp
+																						|term
+																								|factor
+																										|ID, name= 
+																								|term'
+																						|simple-exp'
+																				|cmp-exp'
+														|stmt'
+										|reserved word: end
 						|stmt'
 		|EOF

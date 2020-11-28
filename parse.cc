@@ -1,15 +1,12 @@
-// #define _DEBUG_MODE_
-#ifndef _DEBUG_MODE_
 #include "LL.cc"
 #include "scan.cc"
-#endif
 #ifndef _GLOBALS_H_
 #define _GLOBALS_H_
 #include "globals.h"
 #endif
 using namespace std;
 
-// #define _DEBUG_INFO_
+#define _DEBUG_INFO_
 #define SYNTAX_TREE
 TokenType token;
 stack<string> stk;
@@ -129,7 +126,7 @@ void print_stack(stack<string> s) {
     cout << "---------------" << endl;
 }
 int main() {
-    FILE *fp = fopen("input/neg.tny", "r");
+    FILE *fp = fopen("input/pos.tny", "r");
     nonterminal = ll1.get_nonterminal();
     freopen("output/stack", "w", stdout);
 
