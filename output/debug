@@ -1,0 +1,56 @@
+program
+---------------
+Token = reserved word: read
+
+stmt-sequence
+EOF
+---------------
+Token = reserved word: read
+
+statement
+stmt'
+EOF
+---------------
+Token = reserved word: read
+
+read-stmt
+stmt'
+EOF
+---------------
+Token = reserved word: read
+
+read
+identifier
+stmt'
+EOF
+---------------
+Token = reserved word: read
+
+identifier
+stmt'
+EOF
+---------------
+Token = ID, name= x
+
+stmt'
+EOF
+---------------
+Token = ;
+
+;
+statement
+stmt'
+EOF
+---------------
+Token = ;
+
+statement
+stmt'
+EOF
+---------------
+Token = Error: \
+
+ERROR!
+now token: 1
+nonterminal: statement
+top token: Error: \

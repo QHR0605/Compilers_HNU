@@ -1,0 +1,174 @@
+
+NULLABLE: cmp-exp'	else-part'	factor'	stmt'	term'	
+
+nonterminal: mulop
+FIRST: *	/	
+nonterminal: factor'
+FIRST: *	/	
+nonterminal: addop
+FIRST: +	-	
+nonterminal: term'
+FIRST: +	-	
+nonterminal: factor
+FIRST: (	number	identifier	
+nonterminal: term
+FIRST: (	number	identifier	
+nonterminal: comparison-op
+FIRST: =	<	
+nonterminal: simple-exp
+FIRST: (	number	identifier	
+nonterminal: if-stmt
+FIRST: if	
+nonterminal: stmt-sequence
+FIRST: if	repeat	read	write	identifier	
+nonterminal: stmt'
+FIRST: ;	
+nonterminal: statement
+FIRST: if	repeat	read	write	identifier	
+nonterminal: write-stmt
+FIRST: write	
+nonterminal: repeat-stmt
+FIRST: repeat	
+nonterminal: cmp-exp'
+FIRST: =	<	
+nonterminal: program
+FIRST: if	repeat	read	write	identifier	
+nonterminal: assign-stmt
+FIRST: identifier	
+nonterminal: else-part'
+FIRST: else	
+nonterminal: read-stmt
+FIRST: read	
+nonterminal: exp
+FIRST: (	number	identifier	
+
+nonterminal: mulop
+FOLLOW: (	number	identifier	
+nonterminal: factor'
+FOLLOW: EOF	then	else	end	until	+	-	=	<	)	;	
+nonterminal: addop
+FOLLOW: (	number	identifier	
+nonterminal: factor
+FOLLOW: EOF	then	else	end	until	+	-	*	/	=	<	)	;	
+nonterminal: term
+FOLLOW: EOF	then	else	end	until	+	-	=	<	)	;	
+nonterminal: term'
+FOLLOW: EOF	then	else	end	until	=	<	)	;	
+nonterminal: comparison-op
+FOLLOW: (	number	identifier	
+nonterminal: simple-exp
+FOLLOW: EOF	then	else	end	until	=	<	)	;	
+nonterminal: if-stmt
+FOLLOW: EOF	else	end	until	;	
+nonterminal: stmt-sequence
+FOLLOW: EOF	else	end	until	
+nonterminal: stmt'
+FOLLOW: EOF	else	end	until	
+nonterminal: statement
+FOLLOW: EOF	else	end	until	;	
+nonterminal: write-stmt
+FOLLOW: EOF	else	end	until	;	
+nonterminal: repeat-stmt
+FOLLOW: EOF	else	end	until	;	
+nonterminal: cmp-exp'
+FOLLOW: EOF	then	else	end	until	)	;	
+nonterminal: program
+FOLLOW: 
+nonterminal: assign-stmt
+FOLLOW: EOF	else	end	until	;	
+nonterminal: else-part'
+FOLLOW: end	
+nonterminal: read-stmt
+FOLLOW: EOF	else	end	until	;	
+nonterminal: exp
+FOLLOW: EOF	then	else	end	until	)	;	
+
+production: program -> stmt-sequence EOF
+FIRST_S: if	repeat	read	write	identifier	
+production: stmt-sequence -> statement stmt'
+FIRST_S: if	repeat	read	write	identifier	
+production: stmt' -> ; statement stmt'
+FIRST_S: ;	
+production: stmt' -> $
+FIRST_S: EOF	else	end	until	
+production: statement -> if-stmt
+FIRST_S: if	
+production: statement -> repeat-stmt
+FIRST_S: repeat	
+production: statement -> assign-stmt
+FIRST_S: identifier	
+production: statement -> read-stmt
+FIRST_S: read	
+production: statement -> write-stmt
+FIRST_S: write	
+production: if-stmt -> if exp then stmt-sequence else-part' end
+FIRST_S: if	
+production: else-part' -> else stmt-sequence
+FIRST_S: else	
+production: else-part' -> $
+FIRST_S: end	
+production: repeat-stmt -> repeat stmt-sequence until exp
+FIRST_S: repeat	
+production: assign-stmt -> identifier := exp
+FIRST_S: identifier	
+production: read-stmt -> read identifier
+FIRST_S: read	
+production: write-stmt -> write exp
+FIRST_S: write	
+production: exp -> simple-exp cmp-exp'
+FIRST_S: (	number	identifier	
+production: cmp-exp' -> comparison-op simple-exp
+FIRST_S: =	<	
+production: cmp-exp' -> $
+FIRST_S: EOF	then	else	end	until	)	;	
+production: comparison-op -> <
+FIRST_S: <	
+production: comparison-op -> =
+FIRST_S: =	
+production: simple-exp -> term term'
+FIRST_S: (	number	identifier	
+production: term' -> addop term term'
+FIRST_S: +	-	
+production: term' -> $
+FIRST_S: EOF	then	else	end	until	=	<	)	;	
+production: addop -> +
+FIRST_S: +	
+production: addop -> -
+FIRST_S: -	
+production: term -> factor factor'
+FIRST_S: (	number	identifier	
+production: factor' -> mulop factor factor'
+FIRST_S: *	/	
+production: factor' -> $
+FIRST_S: EOF	then	else	end	until	+	-	=	<	)	;	
+production: mulop -> *
+FIRST_S: *	
+production: mulop -> /
+FIRST_S: /	
+production: factor -> ( exp )
+FIRST_S: (	
+production: factor -> number
+FIRST_S: number	
+production: factor -> identifier
+FIRST_S: identifier	
+              |EOF	              |if	              |then	              |else	              |end	              |repeat	              |until	              |read	              |write	              |identifier	              |number	              |:=	              |=	              |<	              |+	              |-	              |*	              |/	              |(	              |)	              |;	              |
+     simple-exp|              |              |              |              |              |              |              |              |              |21,              |21,              |              |              |              |              |              |              |              |21,              |              |              |
+  comparison-op|              |              |              |              |              |              |              |              |              |              |              |              |20,              |19,              |              |              |              |              |              |              |              |
+            exp|              |              |              |              |              |              |              |              |              |16,              |16,              |              |              |              |              |              |              |              |16,              |              |              |
+      read-stmt|              |              |              |              |              |              |              |14,              |              |              |              |              |              |              |              |              |              |              |              |              |              |
+          stmt'|3,              |              |              |3,              |3,              |              |3,              |              |              |              |              |              |              |              |              |              |              |              |              |              |2,              |
+          addop|              |              |              |              |              |              |              |              |              |              |              |              |              |              |24,              |25,              |              |              |              |              |              |
+          term'|23,              |              |23,              |23,              |23,              |              |23,              |              |              |              |              |              |23,              |23,              |22,              |22,              |              |              |              |23,              |23,              |
+           term|              |              |              |              |              |              |              |              |              |26,              |26,              |              |              |              |              |              |              |              |26,              |              |              |
+         factor|              |              |              |              |              |              |              |              |              |33,              |32,              |              |              |              |              |              |              |              |31,              |              |              |
+        factor'|28,              |              |28,              |28,              |28,              |              |28,              |              |              |              |              |              |28,              |28,              |28,              |28,              |27,              |27,              |              |28,              |28,              |
+          mulop|              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |29,              |30,              |              |              |              |
+     else-part'|              |              |              |10,              |11,              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |
+        if-stmt|              |9,              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |
+     write-stmt|              |              |              |              |              |              |              |              |15,              |              |              |              |              |              |              |              |              |              |              |              |              |
+    repeat-stmt|              |              |              |              |              |12,              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |
+      statement|              |4,              |              |              |              |5,              |              |7,              |8,              |6,              |              |              |              |              |              |              |              |              |              |              |              |
+  stmt-sequence|              |1,              |              |              |              |1,              |              |1,              |1,              |1,              |              |              |              |              |              |              |              |              |              |              |              |
+       cmp-exp'|18,              |              |18,              |18,              |18,              |              |18,              |              |              |              |              |              |17,              |17,              |              |              |              |              |              |18,              |18,              |
+    assign-stmt|              |              |              |              |              |              |              |              |              |13,              |              |              |              |              |              |              |              |              |              |              |              |
+        program|              |0,              |              |              |              |0,              |              |0,              |0,              |0,              |              |              |              |              |              |              |              |              |              |              |              |
