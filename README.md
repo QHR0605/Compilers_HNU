@@ -4,7 +4,7 @@ __generator:__ 随机生成对应的正则表达式的正例字符串和反例�
 
 __input_file:__ 输入文件
 
-__input*:__ 输入的NFA图
+__input_file/input*:__ 输入的NFA图
 
 输入格式：
 ```
@@ -28,13 +28,13 @@ ab             // 字符集 中间无空格
 13 -1 -1
 -1 -1 -1
 ```
-__input*_:__ 构造出的测试样例
+__input_file/input*_:__ 构造出的测试样例
 
 __output_file:__ 输出文件
 
-__out*:__ 输出的NFA DFA minDFA的状态转移表，以及对应的状态集合，终结状态集合
+__output_file/out*:__ 输出的NFA DFA minDFA的状态转移表，以及对应的状态集合，终结状态集合
 
-__check*:__ 用于比对输入的测试样例能否被接受，ACCEPT为接受，FAIL为不可接受
+__output_file/check*:__ 用于比对输入的测试样例能否被接受，ACCEPT为接受，FAIL为不可接受
 
 __Exp2.cc:__ 实验二文件
 
