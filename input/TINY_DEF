@@ -8,9 +8,9 @@ statement -> repeat-stmt
 statement -> assign-stmt
 statement -> read-stmt
 statement -> write-stmt
-if-stmt -> if exp then stmt-sequence else-part' end
-else-part' -> else stmt-sequence
-else-part' -> $
+if-stmt -> if exp then stmt-sequence else-part'
+else-part' -> else stmt-sequence end
+else-part' -> end
 repeat-stmt -> repeat stmt-sequence until exp
 assign-stmt -> identifier := exp
 read-stmt -> read identifier

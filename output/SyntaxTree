@@ -151,6 +151,6 @@
 																						|simple-exp'
 																				|cmp-exp'
 														|stmt'
-										|reserved word: end
+												|reserved word: end
 						|stmt'
 		|EOF

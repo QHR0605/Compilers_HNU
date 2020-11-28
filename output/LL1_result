@@ -1,5 +1,5 @@
 
-NULLABLE: cmp-exp'	else-part'	simple-exp'	stmt'	term'	
+NULLABLE: cmp-exp'	simple-exp'	stmt'	term'	
 
 nonterminal: mulop
 FIRST: *	/	
@@ -36,7 +36,7 @@ FIRST: identifier
 nonterminal: simple-exp'
 FIRST: +	-	
 nonterminal: else-part'
-FIRST: else	
+FIRST: else	end	
 nonterminal: read-stmt
 FIRST: read	
 nonterminal: exp
@@ -77,7 +77,7 @@ FOLLOW: EOF	else	end	until	;
 nonterminal: simple-exp'
 FOLLOW: EOF	then	else	end	until	=	<	)	;	
 nonterminal: else-part'
-FOLLOW: end	
+FOLLOW: EOF	else	end	until	;	
 nonterminal: read-stmt
 FOLLOW: EOF	else	end	until	;	
 nonterminal: exp
@@ -101,11 +101,11 @@ production: statement -> read-stmt
 FIRST_S: read	
 production: statement -> write-stmt
 FIRST_S: write	
-production: if-stmt -> if exp then stmt-sequence else-part' end
+production: if-stmt -> if exp then stmt-sequence else-part'
 FIRST_S: if	
-production: else-part' -> else stmt-sequence
+production: else-part' -> else stmt-sequence end
 FIRST_S: else	
-production: else-part' -> $
+production: else-part' -> end
 FIRST_S: end	
 production: repeat-stmt -> repeat stmt-sequence until exp
 FIRST_S: repeat	

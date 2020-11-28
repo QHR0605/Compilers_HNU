@@ -6,7 +6,7 @@
 #endif
 using namespace std;
 
-#define _DEBUG_INFO_
+// #define _DEBUG_INFO_
 #define SYNTAX_TREE
 TokenType token;
 stack<string> stk;
