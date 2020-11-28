@@ -490,7 +490,7 @@ class LL {
         fclose(stdin);
         cin.clear();
         freopen("CON", "r", stdin);
-        freopen("output/check", "w", stdout);
+        freopen("output/LL1_result", "w", stdout);
         LL_getSet();
         get_Transtable();
         check_Transtable();

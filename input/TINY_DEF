@@ -20,14 +20,14 @@ cmp-exp' -> comparison-op simple-exp
 cmp-exp' -> $
 comparison-op -> <
 comparison-op -> =
-simple-exp -> term term'
-term' -> addop term term'
-term' -> $
+simple-exp -> term simple-exp'
+simple-exp' -> addop term simple-exp'
+simple-exp' -> $
 addop -> +
 addop -> -
-term -> factor factor'
-factor' -> mulop factor factor'
-factor' -> $
+term -> factor term'
+term' -> mulop factor term'
+term' -> $
 mulop -> *
 mulop -> /
 factor -> ( exp )
@@ -48,10 +48,10 @@ exp
 cmp-exp'
 comparison-op
 simple-exp
-term'
+simple-exp'
 addop
 term
-factor'
+term'
 mulop
 factor
 21

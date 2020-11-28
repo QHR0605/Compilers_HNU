@@ -131,7 +131,7 @@ void print_stack(stack<string> s) {
 int main() {
     FILE *fp = fopen("input/neg.tny", "r");
     nonterminal = ll1.get_nonterminal();
-    freopen("output/debug", "w", stdout);
+    freopen("output/stack", "w", stdout);
 
     stk.push("program");
     token = ERROR;
