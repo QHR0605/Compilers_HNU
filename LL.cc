@@ -10,6 +10,8 @@ class LL {
     int prod_num;
     int nonterminal_num;
     int terminal_num;
+    char currString[50];
+    int name_pos;
 
     vector<string> prod_;
     set<string> nonterminal;

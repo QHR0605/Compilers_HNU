@@ -3,7 +3,7 @@
 				|statement
 						|read-stmt
 								|reserved word: read
-								|ID, name= 
+								|ID, name= x
 				|stmt'
 						|;
 						|statement
@@ -13,7 +13,7 @@
 												|simple-exp
 														|term
 																|factor
-																		|NUM, val= 
+																		|NUM, val= 0
 																|term'
 														|simple-exp'
 												|cmp-exp'
@@ -22,20 +22,20 @@
 														|simple-exp
 																|term
 																		|factor
-																				|ID, name= 
+																				|ID, name= x
 																		|term'
 																|simple-exp'
 										|reserved word: then
 										|stmt-sequence
 												|statement
 														|assign-stmt
-																|ID, name= 
+																|ID, name= fact
 																|:=
 																|exp
 																		|simple-exp
 																				|term
 																						|factor
-																								|NUM, val= 
+																								|NUM, val= 1
 																						|term'
 																				|simple-exp'
 																		|cmp-exp'
@@ -47,13 +47,13 @@
 																		|stmt-sequence
 																				|statement
 																						|assign-stmt
-																								|ID, name= 
+																								|ID, name= fact
 																								|:=
 																								|exp
 																										|simple-exp
 																												|term
 																														|factor
-																																|ID, name= 
+																																|ID, name= fact
 																														|term'
 																																|mulop
 																																		|*
@@ -63,12 +63,12 @@
 																																				|simple-exp
 																																						|term
 																																								|factor
-																																										|ID, name= 
+																																										|ID, name= x
 																																								|term'
 																																										|mulop
 																																												|/
 																																										|factor
-																																												|NUM, val= 
+																																												|NUM, val= 3
 																																										|term'
 																																						|simple-exp'
 																																				|cmp-exp'
@@ -80,27 +80,27 @@
 																						|;
 																						|statement
 																								|assign-stmt
-																										|ID, name= 
+																										|ID, name= x
 																										|:=
 																										|exp
 																												|simple-exp
 																														|term
 																																|factor
-																																		|ID, name= 
+																																		|ID, name= x
 																																|term'
 																														|simple-exp'
 																																|addop
 																																		|-
 																																|term
 																																		|factor
-																																				|NUM, val= 
+																																				|NUM, val= 1
 																																		|term'
 																																|simple-exp'
 																																		|addop
 																																				|+
 																																		|term
 																																				|factor
-																																						|NUM, val= 
+																																						|NUM, val= 0
 																																				|term'
 																																		|simple-exp'
 																												|cmp-exp'
@@ -110,7 +110,7 @@
 																				|simple-exp
 																						|term
 																								|factor
-																										|ID, name= 
+																										|ID, name= x
 																								|term'
 																						|simple-exp'
 																				|cmp-exp'
@@ -119,7 +119,7 @@
 																						|simple-exp
 																								|term
 																										|factor
-																												|NUM, val= 
+																												|NUM, val= 0
 																										|term'
 																								|simple-exp'
 														|stmt'
@@ -131,7 +131,7 @@
 																						|simple-exp
 																								|term
 																										|factor
-																												|ID, name= 
+																												|ID, name= fact
 																										|term'
 																								|simple-exp'
 																						|cmp-exp'
@@ -146,7 +146,7 @@
 																				|simple-exp
 																						|term
 																								|factor
-																										|ID, name= 
+																										|ID, name= fact
 																								|term'
 																						|simple-exp'
 																				|cmp-exp'

@@ -22,9 +22,10 @@ void printSyntaxTree(TreeNode *t, int depth) {
     }
     if (t->nodekind == ExpK) {
         cout << "|";
-        printResult(t->attr.op);
-    } else
-        cout << "|" << t->name << endl;
+        printResult(t->attr.op, t->name);
+    } else{
+        cout << "|" << t->name << endl;    
+    }
     for (int i = 0; i < t->max_child; i++) {
         printSyntaxTree(t->child[i], depth + 1);
     }
@@ -83,11 +84,22 @@ TreeNode *newChildNode(TreeNode *fa, string name) {
         t->nodekind = ExpK;
         TokenType tt = ll1.get_Terminal(name);
         t->attr.op = tt;
-        t->name = currString;
+        t->name = name;
     }
     t->father = fa;
     // cout << fa->name << endl;
     return t;
+}
+void rename(TreeNode *t) {
+#ifdef _DEBUG_INFO_
+    cout << "in rename" << endl;
+    cout << t->name << endl;
+#endif
+    t->name = currString;
+#ifdef _DEBUG_INFO_
+    cout << t->name << endl;
+    cout << "out" << endl;
+#endif
 }
 void resize_treenode(TreeNode *t, TreeNode *head) {
     t->child_no = 0;
@@ -159,6 +171,7 @@ int main() {
         if (nonterminal.find(top) == nonterminal.end()) {
             TokenType tt = ll1.get_Terminal(top);
             if (tt == token) {
+                rename(t);
                 token = getToken(fp);
 #ifdef SYNTAX_TREE
                 if (t->nodekind == ExpK && t->father != NULL) {

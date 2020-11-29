@@ -152,6 +152,9 @@ TokenType getToken(FILE *fp_) {
         }
         if (state == DONE) {
             currString[name_pos] = '\0';
+            printf("in scan>>\n");
+            printf("%s\n", currString);
+            printf("out\n");
             if (currToken == ID) {
                 currToken = getRealToken();
             }
@@ -161,7 +164,7 @@ TokenType getToken(FILE *fp_) {
     return currToken;
 }
 
-void printResult(TokenType curr) {
+void printResult(TokenType curr, string name = "") {
     switch(curr) {
         case IF:
         printf("reserved word: if\n");
@@ -219,17 +222,26 @@ void printResult(TokenType curr) {
         break;
         case NUM:
         printf("NUM, val= ");
-        printf("%s\n", currString);
+        if (name != "") {
+            cout << name << endl;
+        }
+        else printf("%s\n", currString);
         break;
         case ID:
         printf("ID, name= ");
-        printf("%s\n", currString);
+        if (name != "") {
+            cout << name << endl;
+        }
+        else printf("%s\n", currString);
         break;
         case ENDFILE:
         printf("EOF\n");
         break;
         case ERROR:
-        printf("Error: %s\n", currString);
+        if (name != "") {
+            cout << name << endl;
+        }
+        else printf("Error: %s\n", currString);
         break;
         default:
         printf("Error\n");
