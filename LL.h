@@ -156,77 +156,102 @@ class LL {
         }
         return currToken;
     }
-    void printResult_(TokenType curr) {
+    int printResult_(TokenType curr) {
+        int ret = 0;
         switch (curr) {
         case IF:
-            printf("if\t");
+            printf("if");
+            ret = 2;
             break;
         case THEN:
-            printf("then\t");
+            printf("then");
+            ret = 4;
             break;
         case ELSE:
-            printf("else\t");
+            printf("else");
+            ret = 4;
             break;
         case END:
-            printf("end\t");
+            printf("end");
+            ret = 3;
             break;
         case REPEAT:
-            printf("repeat\t");
+            printf("repeat");
+            ret = 6;
             break;
         case UNTIL:
-            printf("until\t");
+            printf("until");
+            ret = 5;
             break;
         case READ:
-            printf("read\t");
+            printf("read");
+            ret = 4;
             break;
         case WRITE:
-            printf("write\t");
+            printf("write");
+            ret = 5;
             break;
         case ASSIGN:
-            printf(":=\t");
+            printf(":=");
+            ret = 2;
             break;
         case EQULE:
-            printf("=\t");
+            printf("=");
+            ret = 1;
             break;
         case LE:
-            printf("<\t");
+            printf("<");
+            ret = 1;
             break;
         case PLUS:
-            printf("+\t");
+            printf("+");
+            ret = 1;
             break;
         case MINUS:
-            printf("-\t");
+            printf("-");
+            ret = 1;
             break;
         case TIMES:
-            printf("*\t");
+            printf("*");
+            ret = 1;
             break;
         case DIVIDE:
-            printf("/\t");
+            printf("/");
+            ret = 1;
             break;
         case LB:
-            printf("(\t");
+            printf("(");
+            ret = 1;
             break;
         case RB:
-            printf(")\t");
+            printf(")");
+            ret = 1;
             break;
         case SEMI:
-            printf(";\t");
+            printf(";");
+            ret = 1;
             break;
         case NUM:
-            printf("number\t");
+            printf("number");
+            ret = 6;
             break;
         case ID:
-            printf("identifier\t");
+            printf("identifier");
+            ret = 10;
             break;
         case ENDFILE:
-            printf("EOF\t");
+            printf("EOF");
+            ret = 3;
             break;
         case ERROR:
-            printf("Error\t");
+            printf("Error");
+            ret = 5;
             break;
         default:
-            printf("Error\t");
+            printf("Error");
+            ret = 5;
         }
+        return ret;
     }
 /* LL.cc */
     void LL_getSet() {
@@ -241,21 +266,26 @@ class LL {
     }
 
     void check_Transtable() {
-        cout << setw(15) << " |";
+        printf("%*s", 15, "|");
         for (auto v : terminal) {
-            printResult_(v);
-            cout << setw(15) << "|";
+            int size = printResult_(v);
+            printf("%*s", 15 - size, "|");
         }
         cout << endl;
         for (auto idn : LL1_table) {
-            cout << setw(15) << idn.first << "|";
+            printf("%s", idn.first.c_str());
+            printf("%*s", 15 - idn.first.length(), "|");
+            // cout << setw(15) << setfill(' ') << idn.first << "|";
             for (auto v : terminal) {
+                int ret = 0;
                 for (auto vec : (idn.second)[v]) {
                     cout << vec << ",";
+                    if (vec >= 10) ret += 3;
+                    else ret += 2;
                 }
-                cout << setw(15) << "|";
+                printf("%*s", 15 - ret, "|");
             }
-            cout << endl;
+            printf("\n");
         }
     }
     void get_Transtable() {
