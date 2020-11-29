@@ -59,36 +59,6 @@ Token = reserved word: read
 
 statement和stmt'是sibling结点，位于同一层，都是stmt-sequence的子结点；read-stmt是statement的子结点但不是stmt'的子结点
 
-- 使用说明：
-
-启用宏 SYNTAX_TREE，可以生成对应的语法树
-
-启用宏 SYNTAX_TREE 以及 \_DEBUG_INFO_，可以在stack文件中输出建树的过程：
-
-```
-resize!
-stmt-sequence reserved word: read	// 结点名称	当前接受的token
-end-resize!
-stmt-sequence = name				// 结点名称
-0 2									// 当前子结点编号	最大子结点编号
-
-2									// 子结点处理顺序，编号为当前数字 i - 1
-1
-father: stmt-sequence				// 当前结点名称：父结点
-statement stmt' 					// 子结点名称：编号从小到大
-```
-
-下面的信息为建树时回溯的过程。
-
-```
-back...
-simple-exp'	// 当前结点名称
-0 0			// 当前结点访问的子结点编号 最大子结点编号
-simple-exp
-2 2
-done! 		// 结束
-now at cmp-exp'	// 现在位于的结点。
-```
 
 __input/TINY_DEF__：为输入的产生式（手动消除左递归和提取左公因子后）具体输入格式为：
 
