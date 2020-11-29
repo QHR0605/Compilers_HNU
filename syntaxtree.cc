@@ -1,26 +1,27 @@
 #include "globals.h"
 #include "LL.h"
 
+/* * 
+ * 打印语法树
+ * @param: 
+ * t: 从t结点开始打印
+ * depth: 当前的深度（用于缩进控制）
+ * */
 void printSyntaxTree(TreeNode *t, int depth) {
-    // freopen("output/SyntaxTree", "w", stdout);
-    // cout << t->name << endl;
-    for (int i = 0; i < depth; i++) {
+    for (int i = 0; i < depth; i++)
         cout << "\t\t";
-    }
+
     if (t->nodekind == ExpK) {
         cout << "|";
         printResult(t->attr.op, t->name);
-    } else {
-        cout << "|" << t->name << endl;
-    }
-    for (int i = 0; i < t->max_child; i++) {
+    } else cout << "|" << t->name << endl;
+
+    for (int i = 0; i < t->max_child; i++)
         printSyntaxTree(t->child[i], depth + 1);
-    }
-    // fclose(stdout);
-    // cout.clear();
-    // freopen("CON", "w", stdout);
     return;
 }
+
+// 错误处理函数
 void ERROR_FUNC(TreeNode *head, string top = "", TokenType token_ = ENDFILE) {
     if (top == "" && token_ != ENDFILE) {
         cout << "ERROR!" << endl;
@@ -49,6 +50,8 @@ void ERROR_FUNC(TreeNode *head, string top = "", TokenType token_ = ENDFILE) {
     freopen("CON", "w", stdout);
     exit(0);
 }
+
+// 生成新的 StmtK 结点 即非终结符
 TreeNode *newStmtNode(string name) {
     TreeNode *t = new TreeNode;
     t->lineno = line_no;
@@ -58,6 +61,8 @@ TreeNode *newStmtNode(string name) {
     t->name = name;
     return t;
 }
+
+// 生成子结点 根据子结点类型: 终结符 非终结符 判断生成哪一种结点
 TreeNode *newChildNode(TreeNode *fa, string name) {
     TreeNode *t = new TreeNode;
     set<string> nonterminal = ll1.get_nonterminal();
@@ -73,31 +78,21 @@ TreeNode *newChildNode(TreeNode *fa, string name) {
         t->name = name;
     }
     t->father = fa;
-    // cout << fa->name << endl;
     return t;
 }
+
+// 对结点进行重命名, 以显示当前ID或NUM接收到的具体的字符串
 void rename(TreeNode *t) {
-#ifdef _DEBUG_INFO_
-    cout << "in rename" << endl;
-    cout << t->name << endl;
-#endif
     t->name = currString;
-#ifdef _DEBUG_INFO_
-    cout << t->name << endl;
-    cout << "out" << endl;
-#endif
 }
+
+// 重新分配当前结点的最大子结点个数
+// 因为在生成子结点时, 没有对应的token, 无法得到正确的最大子结点个数
 void resize_treenode(TreeNode *t, TreeNode *head) {
     t->child_no = 0;
     if (t->nodekind == ExpK)
         t->max_child = 0;
     else {
-#ifdef _DEBUG_INFO_
-        cout << "resize!" << endl;
-        cout << t->name << " ";
-        printResult(token);
-        cout << "end-resize!" << endl;
-#endif
         vector<int> nxt_prod = ll1.LL1_table[t->name][token];
         if (nxt_prod.size() == 0) {
             ERROR_FUNC(head, t->name, token);
@@ -108,6 +103,8 @@ void resize_treenode(TreeNode *t, TreeNode *head) {
             t->max_child = ll1.prod[nxt_prod[0]].size() - 1;
     }
 }
+
+// 回溯, 找到最近的一个还有未被访问过的子结点的结点
 TreeNode *get_Free_Node(TreeNode *t, int pos) {
     if (pos == 1) {
         if (t->max_child != 0) {
@@ -122,15 +119,8 @@ TreeNode *get_Free_Node(TreeNode *t, int pos) {
     }
     if (t->nodekind == StmtK) {
 
-#ifdef _DEBUG_INFO_
-        cout << "back..." << endl;
-#endif
         while (t->child_no >= t->max_child && t->max_child != -1 && t->nodekind == StmtK &&
                t->father != NULL) {
-#ifdef _DEBUG_INFO_
-            cout << t->name << endl;
-            cout << t->child_no << " " << t->max_child << endl;
-#endif
             t = t->father;
             if (t->child_no < t->max_child) {
                 t = t->child[t->child_no++];
@@ -139,16 +129,6 @@ TreeNode *get_Free_Node(TreeNode *t, int pos) {
                 }
             }
         }
-#ifdef _DEBUG_INFO_
-        cout << "done! " << endl;
-#endif
     }
     return t;
-}
-void show_tree(TreeNode *t) {
-    cout << "father: " << t->name << endl;
-    for (int i = t->child_no; i < t->max_child; i++) {
-        cout << t->child[i]->name << " ";
-    }
-    cout << endl << endl;
 }

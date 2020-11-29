@@ -1,122 +1,87 @@
-// #define _DEBUG_INFO_
-#define SYNTAX_TREE
-
-#include "scan.cc"
 #include "globals.h"
 #include "LL.h"
-
-#ifdef SYNTAX_TREE
+#include "scan.cc"
 #include "syntaxtree.cc"
-#endif
 using namespace std;
 
 stack<string> stk;
 set<string> nonterminal;
 
-void print_stack(stack<string> s) {
+void print_stack_info(stack<string> s) { // 打印栈的信息
     stack<string> ss = s;
     while (!ss.empty()) {
         cout << ss.top() << endl;
         ss.pop();
     }
     cout << "---------------" << endl;
+
+    cout << "Token = ";
+    printResult(token);
+    cout << endl;
 }
 int main() {
     FILE *fp = fopen("input/pos.tny", "r");
-    nonterminal = ll1.get_nonterminal();
+    nonterminal = ll1.get_nonterminal(); // 非终结集
     freopen("output/stack", "w", stdout);
 
     stk.push("program");
     token = ERROR;
     token = getToken(fp);
 
-#ifdef SYNTAX_TREE
+    // 生成根节点
     TreeNode *t = new TreeNode;
     t = newStmtNode("program");
+    // 根节点指针，用于发生错误时输出语法树
     TreeNode *head = t;
-#endif
 
     while (!stk.empty()) {
+        print_stack_info(stk);
 
-        print_stack(stk);
-        cout << "Token = ";
-        printResult(token);
-        cout << endl;
-        // printf("%s\n", currString);
         string top = stk.top();
         stk.pop();
-#ifdef SYNTAX_TREE
+
         resize_treenode(t, head);
-#endif
-#ifdef _DEBUG_INFO_
-        cout << t->name << " = name" << endl;
-        cout << t->child_no << " " << t->max_child << endl << endl;
-#endif
+
         if (nonterminal.find(top) == nonterminal.end()) {
             TokenType tt = ll1.get_Terminal(top);
             if (tt == token) {
                 rename(t);
                 token = getToken(fp);
-#ifdef SYNTAX_TREE
+                // 语法树回溯, 因为到达了叶子节点
                 t = get_Free_Node(t, 0);
-#endif
-                // printResult(token);
-            } else { // ERROR
-#ifdef SYNTAX_TREE
+            } else { // ERROR!
                 ERROR_FUNC(head, "", tt);
-#else
-                cout << "ERROR!" << endl;
-                cout << "now token: " << token << endl;
-                cout << "top token: ";
-                printResult(tt);
-                exit(0);
-#endif
             }
         } else {
             vector<int> nxt_prod = ll1.LL1_table[top][token];
-            if (nxt_prod.size() == 0) {
-#ifdef SYNTAX_TREE
+            if (nxt_prod.size() == 0) { // ERROR！
                 ERROR_FUNC(head, top);
-#else
-                cout << "ERROR!" << endl;
-                cout << "nonterminal: " << top << endl;
-                cout << "now token: ";
-                printResult(token);
-                exit(0);
-#endif
             } else {
                 vector<string> ret = ll1.prod[nxt_prod[0]];
                 for (int i = ret.size() - 1; i >= 1; i--) {
-#ifdef _DEBUG_INFO_
-                    cout << i << endl;
-#endif
-                    if (ret[i] == "$")
+                    if (ret[i] == "$") // 空串不压栈
                         continue;
-#ifdef SYNTAX_TREE
-                    t->child[i - 1] = newChildNode(t, ret[i]);
-#endif
                     stk.push(ret[i]);
+                    // 生成当前结点子结点，但不分配最大子结点大小
+                    t->child[i - 1] = newChildNode(t, ret[i]);
                 }
             }
-#ifdef SYNTAX_TREE
-#ifdef _DEBUG_INFO_
-            show_tree(t);
-#endif
+            // 看当前非叶子结点是否需要回溯：可能所以子结点都被遍历
+            // 若不需要，则进入下一个子结点继续
             t = get_Free_Node(t, 1);
-#endif
         }
     }
+    // 语法分析成功
     cout << "YES" << endl;
     fclose(stdout);
     cout.clear();
     freopen("CON", "w", stdout);
 
-#ifdef SYNTAX_TREE
-    // cout << t->name << endl;
+    // 打印语法树
+    // 上述算法在成功结束时，构造语法树的指针t一定会回到根节点
     freopen("output/SyntaxTree", "w", stdout);
     printSyntaxTree(t, 0);
     fclose(stdout);
     cout.clear();
     freopen("CON", "w", stdout);
-#endif
 }
