@@ -1,3 +1,5 @@
+#ifndef _GLOBALS_H_
+#define _GLOBALS_H_
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -81,3 +83,6 @@ char buffer[MAX_BUF_SIZE];
 int name_pos = 0;
 int line_no = 0;
 char currString[MAX_STR_SIZE];
+
+TokenType token; 
+#endif

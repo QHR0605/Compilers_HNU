@@ -1,6 +1,3 @@
-in scan>>
-read
-out
 program
 ---------------
 Token = reserved word: read
@@ -29,18 +26,12 @@ EOF
 ---------------
 Token = reserved word: read
 
-in scan>>
-x
-out
 identifier
 stmt'
 EOF
 ---------------
 Token = ID, name= x
 
-in scan>>
-
-out
 stmt'
 EOF
 ---------------
@@ -53,9 +44,6 @@ EOF
 ---------------
 Token = ;
 
-in scan>>
-if
-out
 statement
 stmt'
 EOF
@@ -78,9 +66,6 @@ EOF
 ---------------
 Token = reserved word: if
 
-in scan>>
-0
-out
 exp
 then
 stmt-sequence
@@ -135,9 +120,6 @@ EOF
 ---------------
 Token = NUM, val= 0
 
-in scan>>
-
-out
 term'
 simple-exp'
 cmp-exp'
@@ -188,9 +170,6 @@ EOF
 ---------------
 Token = <
 
-in scan>>
-x
-out
 simple-exp
 then
 stmt-sequence
@@ -232,9 +211,6 @@ EOF
 ---------------
 Token = ID, name= x
 
-in scan>>
-then
-out
 term'
 simple-exp'
 then
@@ -262,9 +238,6 @@ EOF
 ---------------
 Token = reserved word: then
 
-in scan>>
-fact
-out
 stmt-sequence
 else-part'
 stmt'
@@ -298,9 +271,6 @@ EOF
 ---------------
 Token = ID, name= fact
 
-in scan>>
-:
-out
 :=
 exp
 stmt'
@@ -310,9 +280,6 @@ EOF
 ---------------
 Token = :=
 
-in scan>>
-1
-out
 exp
 stmt'
 else-part'
@@ -362,9 +329,6 @@ EOF
 ---------------
 Token = NUM, val= 1
 
-in scan>>
-
-out
 term'
 simple-exp'
 cmp-exp'
@@ -408,9 +372,6 @@ EOF
 ---------------
 Token = ;
 
-in scan>>
-repeat
-out
 statement
 stmt'
 else-part'
@@ -438,9 +399,6 @@ EOF
 ---------------
 Token = reserved word: repeat
 
-in scan>>
-fact
-out
 stmt-sequence
 until
 exp
@@ -486,9 +444,6 @@ EOF
 ---------------
 Token = ID, name= fact
 
-in scan>>
-:
-out
 :=
 exp
 stmt'
@@ -501,9 +456,6 @@ EOF
 ---------------
 Token = :=
 
-in scan>>
-fact
-out
 exp
 stmt'
 until
@@ -568,9 +520,6 @@ EOF
 ---------------
 Token = ID, name= fact
 
-in scan>>
-
-out
 term'
 simple-exp'
 cmp-exp'
@@ -614,9 +563,6 @@ EOF
 ---------------
 Token = *
 
-in scan>>
-
-out
 factor
 term'
 simple-exp'
@@ -647,9 +593,6 @@ EOF
 ---------------
 Token = (
 
-in scan>>
-x
-out
 exp
 )
 term'
@@ -734,9 +677,6 @@ EOF
 ---------------
 Token = ID, name= x
 
-in scan>>
-
-out
 term'
 simple-exp'
 cmp-exp'
@@ -792,9 +732,6 @@ EOF
 ---------------
 Token = /
 
-in scan>>
-3
-out
 factor
 term'
 simple-exp'
@@ -831,9 +768,6 @@ EOF
 ---------------
 Token = NUM, val= 3
 
-in scan>>
-
-out
 term'
 simple-exp'
 cmp-exp'
@@ -896,9 +830,6 @@ EOF
 ---------------
 Token = )
 
-in scan>>
-
-out
 term'
 simple-exp'
 cmp-exp'
@@ -957,9 +888,6 @@ EOF
 ---------------
 Token = ;
 
-in scan>>
-x
-out
 statement
 stmt'
 until
@@ -995,9 +923,6 @@ EOF
 ---------------
 Token = ID, name= x
 
-in scan>>
-:
-out
 :=
 exp
 stmt'
@@ -1010,9 +935,6 @@ EOF
 ---------------
 Token = :=
 
-in scan>>
-x
-out
 exp
 stmt'
 until
@@ -1077,9 +999,6 @@ EOF
 ---------------
 Token = ID, name= x
 
-in scan>>
-
-out
 term'
 simple-exp'
 cmp-exp'
@@ -1133,9 +1052,6 @@ EOF
 ---------------
 Token = -
 
-in scan>>
-1
-out
 term
 simple-exp'
 cmp-exp'
@@ -1177,9 +1093,6 @@ EOF
 ---------------
 Token = NUM, val= 1
 
-in scan>>
-
-out
 term'
 simple-exp'
 cmp-exp'
@@ -1233,9 +1146,6 @@ EOF
 ---------------
 Token = +
 
-in scan>>
-0
-out
 term
 simple-exp'
 cmp-exp'
@@ -1277,9 +1187,6 @@ EOF
 ---------------
 Token = NUM, val= 0
 
-in scan>>
-until
-out
 term'
 simple-exp'
 cmp-exp'
@@ -1335,9 +1242,6 @@ EOF
 ---------------
 Token = reserved word: until
 
-in scan>>
-x
-out
 exp
 stmt'
 else-part'
@@ -1387,9 +1291,6 @@ EOF
 ---------------
 Token = ID, name= x
 
-in scan>>
-
-out
 term'
 simple-exp'
 cmp-exp'
@@ -1435,9 +1336,6 @@ EOF
 ---------------
 Token = =
 
-in scan>>
-0
-out
 simple-exp
 stmt'
 else-part'
@@ -1475,9 +1373,6 @@ EOF
 ---------------
 Token = NUM, val= 0
 
-in scan>>
-
-out
 term'
 simple-exp'
 stmt'
@@ -1511,9 +1406,6 @@ EOF
 ---------------
 Token = ;
 
-in scan>>
-write
-out
 statement
 stmt'
 else-part'
@@ -1539,9 +1431,6 @@ EOF
 ---------------
 Token = reserved word: write
 
-in scan>>
-fact
-out
 exp
 stmt'
 else-part'
@@ -1591,9 +1480,6 @@ EOF
 ---------------
 Token = ID, name= fact
 
-in scan>>
-else
-out
 term'
 simple-exp'
 cmp-exp'
@@ -1642,9 +1528,6 @@ EOF
 ---------------
 Token = reserved word: else
 
-in scan>>
-write
-out
 stmt-sequence
 end
 stmt'
@@ -1677,9 +1560,6 @@ EOF
 ---------------
 Token = reserved word: write
 
-in scan>>
-fact
-out
 exp
 stmt'
 end
@@ -1729,9 +1609,6 @@ EOF
 ---------------
 Token = ID, name= fact
 
-in scan>>
-end
-out
 term'
 simple-exp'
 cmp-exp'
@@ -1772,9 +1649,6 @@ EOF
 ---------------
 Token = reserved word: end
 
-in scan>>
-
-out
 stmt'
 EOF
 ---------------
@@ -1784,7 +1658,4 @@ EOF
 ---------------
 Token = EOF
 
-in scan>>
-
-out
 YES

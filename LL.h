@@ -1,8 +1,7 @@
-#ifndef _GLOBALS_H_
-#define _GLOBALS_H_
+#ifndef _LL_H_
+#define _LL_H_
 #include "globals.h"
 using namespace std;
-#endif
 
 /* LL.cc */
 class LL {
@@ -522,6 +521,8 @@ class LL {
     }
 };
 
+LL ll1;
 // int main() {
 //     LL l;
 // }
+#endif

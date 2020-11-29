@@ -1,10 +1,14 @@
-{
-    if x = fact then
-    end
+{ Sample program
+  in TINY language -
+  computes factorial
 }
 read x;
-\\
-str := "string"
-str :- 2;
-w  ww
-str123
+else 0 < x then { don't compute if x <= 0 }
+  fact := 1;
+  repeat
+    fact := fact * (x / 3);
+    x := x - 1 + 0
+  until x = 0;
+  write fact  { output factorial of x }
+else write fact
+end

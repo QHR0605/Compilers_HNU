@@ -1,8 +1,5 @@
-#ifndef _GLOBALS_H_
-#define _GLOBALS_H_
 #include "globals.h"
 using namespace std;
-#endif
 
 #define MAX_BUF_SIZE 256
 #define MAX_STR_SIZE 50
@@ -152,9 +149,6 @@ TokenType getToken(FILE *fp_) {
         }
         if (state == DONE) {
             currString[name_pos] = '\0';
-            printf("in scan>>\n");
-            printf("%s\n", currString);
-            printf("out\n");
             if (currToken == ID) {
                 currToken = getRealToken();
             }

@@ -22,13 +22,15 @@
 
 __globals.h__：包含头文件的声明，枚举类型的定义以及数据结构的定义
 
-__scan.cc__：重用的实验一的词法分析器部分
-
-__LL.cc__：该实验使用LL(1)文法，在该 c 文件中读入了产生式，计算了FIRST集，FOLLOW集，NULLABLE集和FIRST_S集，并构造了状态转移表。将最后各个集合以及状态转移表输出到 output/LL1_result 文件内。
+__LL.h__：该实验使用LL(1)文法，在该 c 文件中读入了产生式，计算了FIRST集，FOLLOW集，NULLABLE集和FIRST_S集，并构造了状态转移表。将最后各个集合以及状态转移表输出到 output/LL1_result 文件内。
 
 （状态转移表暂时没有弄好输出格式，凑活着看，第一列为产生式头部的非终结符，第一行为终结符，对应的单元为其在当前终结符token的情况下转移到的产生式序号）
 
-__parse.cc__：用来进行语法分析以及生成语法树的程序。每一步的stack信息保存在 output/stack 内，格式如下：
+__scan.cc__：重用的实验一的词法分析器部分
+
+__syntaxtree.cc__：用来生成语法树的程序。如果在parse.cc内定义了 SYNTAX_TREE 宏，则会启用该程序
+
+__parse.cc__：用来进行语法分析的程序。每一步的stack信息保存在 output/stack 内，格式如下：
 
 ```
 read
