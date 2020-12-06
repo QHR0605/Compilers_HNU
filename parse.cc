@@ -30,7 +30,7 @@ int main() {
 
     // 生成根节点
     TreeNode *t = new TreeNode;
-    t = newStmtNode("program");
+    t = newRootNode("program");
     // 根节点指针，用于发生错误时输出语法树
     TreeNode *head = t;
 
@@ -63,7 +63,7 @@ int main() {
                         continue;
                     stk.push(ret[i]);
                     // 生成当前结点子结点，但不分配最大子结点大小
-                    t->child[i - 1] = newChildNode(t, ret[i]);
+                    t->child[i - 1] = newNode(t, ret[i]);
                 }
             }
             // 看当前非叶子结点是否需要回溯：可能所以子结点都被遍历

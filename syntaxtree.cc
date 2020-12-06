@@ -52,7 +52,7 @@ void ERROR_FUNC(TreeNode *head, string top = "", TokenType token_ = ENDFILE) {
 }
 
 // 生成新的 StmtK 结点 即非终结符
-TreeNode *newStmtNode(string name) {
+TreeNode *newRootNode(string name) {
     TreeNode *t = new TreeNode;
     t->lineno = line_no;
     t->child_no = 0;
@@ -63,11 +63,11 @@ TreeNode *newStmtNode(string name) {
 }
 
 // 生成子结点 根据子结点类型: 终结符 非终结符 判断生成哪一种结点
-TreeNode *newChildNode(TreeNode *fa, string name) {
+TreeNode *newNode(TreeNode *fa, string name) {
     TreeNode *t = new TreeNode;
     set<string> nonterminal = ll1.get_nonterminal();
     if (nonterminal.find(name) != nonterminal.end()) {
-        t = newStmtNode(name);
+        t = newRootNode(name);
     } else {
         t->lineno = line_no;
         t->child_no = 0;
@@ -118,7 +118,6 @@ TreeNode *get_Free_Node(TreeNode *t, int pos) {
         }
     }
     if (t->nodekind == StmtK) {
-
         while (t->child_no >= t->max_child && t->max_child != -1 && t->nodekind == StmtK &&
                t->father != NULL) {
             t = t->father;
