@@ -1,3 +1,7 @@
+说在前面：
+
+不是我写的，借鉴了某位大佬的然后进行了修改：传送门 https://github.com/benfowler/c-minus
+
 主要完成的部分：`analyse.c` 和 `symtab.c`
 
 `analyse.c`为语义分析
