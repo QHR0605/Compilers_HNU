@@ -1,0 +1,22 @@
+/* A Program to perform Euclid`s
+   Algorithm to computer gcd */
+
+int gcd (int u, int v)
+{
+    if (v == 0) return u;
+    else return gcd(v,u-u/v*v);
+    /* u-u/v*v == u mod v */
+}
+
+void main(void)
+{
+    int x; int y; int a[3]; int b[2];
+    x = input(); y = input();
+    a[1] = 3;
+    b[0] = 1;
+    b[0] = a[1];
+    output(b[0]);
+    y = x;
+    output(y);
+    output(gcd(x,y));
+}
