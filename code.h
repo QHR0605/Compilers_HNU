@@ -9,12 +9,10 @@
 #define gp 5
 /* base pointer for stack frame*/
 #define ebp 4
-/* zero = zero register*/
-#define zero 0
 /* ac = accumulator */
-#define ac 1
+#define ac 0
 /* ac1 = 2nd accumulator */
-#define ac1 2
+#define ac1 1
 
 /* code emitting utilities */
 

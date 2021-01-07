@@ -9,7 +9,6 @@ static int getInfo = 0;
 static int saved_config = FALSE;
 static int siblingRecur = TRUE;
 static char *currentFuncName = NULL;
-static int isCall = FALSE;
 
 int globalIndex = 0;
 typedef struct varNode {
@@ -78,7 +77,6 @@ static int offset(char *name) {
     VarNode *vTmp;
 
     if (f != NULL) {
-        /* find variable */
         vTmp = f->vars;
         while (vTmp != NULL) {
             if (strcmp(vTmp->name, name) == 0) {
@@ -86,7 +84,6 @@ static int offset(char *name) {
             }
             vTmp = vTmp->next;
         }
-        /* or find parameters */
         vTmp = f->params;
         while (vTmp != NULL) {
             if (strcmp(vTmp->name, name) == 0) {
@@ -127,13 +124,11 @@ static FuncInfo *makeFuncInfo(TreeNode *dec) {
     TreeNode *compound_stmt;
     TreeNode *local_declarations;
 
-    /* Construct a frame. */
     FuncInfo *info = (FuncInfo *)malloc(sizeof(FuncInfo));
     info->dec = dec;
     info->name = copyString(dec->attr.name);
     info->inst_addr = emitSkip(0);
 
-    /* pre-defined functions processing. */
     if (strcmp(dec->attr.name, "input") == 0) {
         info->var_num = 0;
         info->vars = NULL;
@@ -157,20 +152,25 @@ static FuncInfo *makeFuncInfo(TreeNode *dec) {
         return info;
     }
 
-    /* Declaration Info */
     params = dec->child[0];
     compound_stmt = dec->child[1];
     local_declarations = compound_stmt->child[0];
 
-    /* Insert parameters into vars list. */
     if (params->type == Void)
         info->para_num = 0;
     else {
         tmp = params;
         while (tmp != NULL) {
-            info->para_num++;
+            if (tmp->kind.exp == IdArrayK) {
+                info->para_num += tmp->child[0]->attr.val;
+            }
+            else info->para_num++;
             vTmp = (VarNode *)malloc(sizeof(VarNode));
-            vTmp->index = index++;
+            if (tmp->kind.exp == IdArrayK) {
+                vTmp->index = index;
+                index += tmp->child[0]->attr.val;
+            }
+            else vTmp->index = index++;
             vTmp->name = copyString(tmp->attr.name);
 
             if (info->params == NULL)
@@ -179,12 +179,10 @@ static FuncInfo *makeFuncInfo(TreeNode *dec) {
                 vTmp->next = info->params;
                 info->params = vTmp;
             }
-            // push_var(vTmp, info->params);
             tmp = tmp->sibling;
         }
     }
 
-    /* Insert var declarations into vars list. */
     if (local_declarations == NULL)
         info->var_num = 0;
     else {
@@ -197,7 +195,7 @@ static FuncInfo *makeFuncInfo(TreeNode *dec) {
             else info->var_num++;
             vTmp = (VarNode *)malloc(sizeof(VarNode));
             if (tmp->kind.exp == IdArrayK) {
-                vTmp->index = index + tmp->child[0]->attr.val;
+                vTmp->index = index;
                 index += tmp->child[0]->attr.val;
             }
             else vTmp->index = index++;
@@ -209,7 +207,6 @@ static FuncInfo *makeFuncInfo(TreeNode *dec) {
                 vTmp->next = info->vars;
                 info->vars = vTmp;
             }
-            // push_var(vTmp, info->vars);
             tmp = tmp->sibling;
         }
     }
@@ -254,7 +251,7 @@ static void call(FuncInfo *f) {
 
     emitRM("LDA", ac, 3, pc, "ac = pc + 3 (next pc)");
     push_reg(ac, "PUSH AC (return address)");
-    emitRM("LDC", pc, inst_addr, zero, "pc = address (jmp to called function)");
+    emitRM("LDC", pc, inst_addr, 0, "pc = address (jmp to called function)");
     emitRM("LDA", esp, arg_num, esp, "esp = esp + arg_num");
 
     if (TraceCode) emitComment("<- call");
@@ -275,11 +272,11 @@ static void genStmt(TreeNode *tree) {
         p1 = tree->child[0];
         p2 = tree->child[1];
         p3 = tree->child[2];
-        /* generate code for test expression */
-        cGen(p1); // value in ac
+        
+        cGen(p1);
         savedLoc1 = emitSkip(1);
         emitComment("if: jump to else belongs here");
-        /* recurse on then part */
+
         cGen(p2);
         savedLoc2 = emitSkip(1);
         emitComment("if: jump to end belongs here");
@@ -287,7 +284,7 @@ static void genStmt(TreeNode *tree) {
         emitBackup(savedLoc1);
         emitRM_Abs("JEQ", ac, currentLoc, "if: jmp to else");
         emitRestore();
-        /* recurse on else part */
+
         cGen(p3);
         currentLoc = emitSkip(0);
         emitBackup(savedLoc2);
@@ -301,13 +298,12 @@ static void genStmt(TreeNode *tree) {
         
         getInfo = ADDRESS;
         cGen(tree->child[0]);
-        push_reg(ac, "push ac"); // push ac
+        push_reg(ac, "push ac");
 
         getInfo = VALUE;
         cGen(tree->child[1]);
-        pop_reg(ac1, "pop ac1"); // pop ac1
+        pop_reg(ac1, "pop ac1");
 
-        /* At left side's address, assign right side's value */
         emitRM("ST", ac, 0, ac1, "dMem[ac1]=ac");
 
         if (TraceCode) emitComment("<- assign");
@@ -316,7 +312,6 @@ static void genStmt(TreeNode *tree) {
     case ParamK:
     case VarDecK:
     case ArrayDecK:
-        // do nothing
         break;
 
     case FuncDecK:
@@ -349,11 +344,11 @@ static void genStmt(TreeNode *tree) {
         savedLoc2 = emitSkip(1);
         emitComment("while: conditional jmp to end");
         cGen(tree->child[1]);
-        emitRM("LDC", pc, savedLoc1, zero, "while: go back; pc=addr of condition");
+        emitRM("LDC", pc, savedLoc1, 0, "while: go back; pc=addr of condition");
 
         currentLoc = emitSkip(0);
         emitBackup(savedLoc2);
-        emitRM("JEQ", ac, currentLoc, zero, "while: if ac==0, pc=addr of endwhile");
+        emitRM("JEQ", ac, currentLoc, 0, "while: if ac==0, pc=addr of endwhile");
         emitRestore();
         if (TraceCode) emitComment("<- while");
         break;
@@ -371,7 +366,6 @@ static void genStmt(TreeNode *tree) {
     }
 } /* genStmt */
 
-/* emit one instruction to get the addresss of a variable. */
 void getVar(TreeNode *var) {
     int isPar = isParam(var->attr.name);
     int isGlob = isGlobalVar(var);
@@ -385,10 +379,10 @@ void getVar(TreeNode *var) {
 
     if (TraceCode) emitComment("-> get variable");
     if (isPar == TRUE) {
-        if (var->type == Integer) {
+        if (var->kind.exp == IdK) {
             emitRM("LDA", ac, ofs + 2, ebp, "ac = ebp+offset+2");
-        } else if (var->type == IntegerArray) {
-            emitRM("LD", ac, ofs + 2, ebp, "ac = dMem[ebp+offset+2]");
+        } else if (var->kind.exp == IdArrayK) {
+            emitRM("LDA", ac1, ofs + 2, ebp, "ac1 = ebp+offset+2");
         }
     } else {
         if (var->nodekind == ExpK) {
@@ -427,13 +421,13 @@ static void genExp(TreeNode *tree) {
 
     case ConstK:
         if (TraceCode) emitComment("-> Const");
-        emitRM("LDC", ac, tree->attr.val, zero, "ac=const value");
+        emitRM("LDC", ac, tree->attr.val, 0, "ac=const value");
         if (TraceCode) emitComment("<- Const");
         break;
 
     case IdK:
         if (TraceCode) emitComment("-> Id");
-        getVar(tree); // reg[ac]=address of var
+        getVar(tree);
         if (getInfo == VALUE)
             emitRM("LD", ac, 0, ac, "ac=dMem[ac]");
         if (TraceCode) emitComment("<- Id");
@@ -446,7 +440,6 @@ static void genExp(TreeNode *tree) {
         getInfo = ADDRESS;
         cGen(tree->child[0]);
         getInfo = saved_config;
-        // pop_reg(ac, "POP AC");
         emitRO("SUB", ac, ac1, ac, "ac=ac1-ac (array offset)");
         if (getInfo == VALUE)
             emitRM("LD", ac, 0, ac, "ac=dMem[ac]");
@@ -503,19 +496,17 @@ static void genExp(TreeNode *tree) {
         break; /* OpK */
 
     case CallK:
-        isCall = TRUE;
         if (TraceCode) {
             emitComment("-> call");
             emitComment(tree->attr.name);
         }
 
-        TreeNode *p = tree->child[0]; // arguments
+        TreeNode *p = tree->child[0];
         while (p != NULL) {
             pushParam(p);
             p = p->sibling;
         }
 
-        /* push parameters */
         siblingRecur = FALSE;
         while ((p = popParam()) != NULL) {
             getInfo = VALUE;
@@ -524,7 +515,6 @@ static void genExp(TreeNode *tree) {
         }
         siblingRecur = TRUE;
 
-        /* emit instructions for call */
         FuncInfo *f = lookup_func(tree->attr.name);
         call(f);
         if (TraceCode) emitComment("<- call");
@@ -556,19 +546,18 @@ static void cGen(TreeNode *tree) {
 }
 
 /* after this function called,
- * reg[zero] = 0
+ * reg[0] = 0
  * reg[gp] = max address of memory
  * reg[esp] = max address - (global variable number + 1)
  */
 static void codeGenInit(void) {
     int size = get_global_var_num();
 
-    if (TraceCode) emitComment("-> init zero, gp, esp");
-    emitRM("LDC", zero, 0, zero, "reg[zero]=0 (init zero)");
-    emitRM("LD", gp, 0, zero, "gp=dMem[0] (dMem[0]==maxaddress)");
-    emitRM("ST", zero, 0, zero, "dMem[0]=0 (clear location 0)");
+    emitComment("Standard prelude:");
+    emitRM("LD", gp, 0, 0, "gp=dMem[0] (dMem[0]==maxaddress)");
+    emitRM("ST", 0, 0, 0, "dMem[0]=0 (clear location 0)");
     emitRM("LDA", esp, -size + 1, gp, "esp=gp-global_var_num+1");
-    if (TraceCode) emitComment("<- init zero, gp, esp");
+    emitComment("End of standard prelude.");
 }
 static void codeGenInput(void) {
     if (TraceCode) emitComment("-> pre-defined function: input");
@@ -583,7 +572,7 @@ static void codeGenInput(void) {
         exit(-1);
 
     func_in("input");
-    emitRO("IN", ac, zero, zero, "input ac");
+    emitRO("IN", ac, 0, 0, "input ac");
     func_ret();
     if (TraceCode) emitComment("<- pre-defined function: input");
 }
@@ -601,7 +590,7 @@ static void codeGenOutput(void) {
 
     func_in("output");
     emitRM("LD", ac, 2, ebp, "ac=dMem[ebp+2] (param 0)");
-    emitRO("OUT", ac, zero, zero, "output ac");
+    emitRO("OUT", ac, 0, 0, "output ac");
     func_ret();
     if (TraceCode) emitComment("<- pre-defined function: output");
 }
@@ -621,25 +610,20 @@ void codeGen(TreeNode *syntaxTree, char *codefile) {
     strcpy(s, "File: ");
     strcat(s, codefile);
 
-    /* Instruction comment */
     emitComment("C-MINUS Compilation to TM Code");
     emitComment(s);
     codeGenInit();
 
-    /* jmp to main, call main, halt. */
     emitComment("skip 5 instr: call main, waiting for addr of main");
     mainLoc = emitSkip(5);
-    emitRO("HALT", zero, zero, zero, "stop program");
+    emitRO("HALT", 0, 0, 0, "stop program");
 
-    /* define pre-defined functions: input, output */
     codeGenInput();
     codeGenOutput();
 
     traverseGlobal(syntaxTree);
-    /* generate code for TINY program */
     cGen(syntaxTree);
 
-    /* backpatch address of main */
     emitBackup(mainLoc);
     call(lookup_func("main"));
     emitRestore();
