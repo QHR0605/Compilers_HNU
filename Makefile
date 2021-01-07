@@ -22,4 +22,4 @@ clean:
 	-rm cminus
 	-rm $(OBJS)
 	-rm tm
-	-rm *.tm
+	-rm test/*.tm
