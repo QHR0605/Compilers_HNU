@@ -348,7 +348,7 @@ static void genStmt(TreeNode *tree) {
 
         currentLoc = emitSkip(0);
         emitBackup(savedLoc2);
-        emitRM("JEQ", ac, currentLoc, 0, "while: if ac==0, pc=addr of endwhile");
+        emitRM_Abs("JEQ", ac, currentLoc, "while: if ac==0, pc=addr of endwhile");
         emitRestore();
         if (TraceCode) emitComment("<- while");
         break;

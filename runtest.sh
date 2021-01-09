@@ -1,8 +1,4 @@
 #!/bin/bash
-if [ ! -f "test/test.tm" ]; then
-    if [ ! -f "cminus" ]; then
-        make
-    fi
-    ./cminus test/test.cm
-fi
+make
+./cminus test/test.cm
 ./tm test/test.tm
