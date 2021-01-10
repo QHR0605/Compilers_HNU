@@ -1,0 +1,77 @@
+34
+program -> stmt-sequence EOF
+stmt-sequence -> statement stmt'
+stmt' -> ; statement stmt'
+stmt' -> $
+statement -> if-stmt
+statement -> repeat-stmt
+statement -> assign-stmt
+statement -> read-stmt
+statement -> write-stmt
+if-stmt -> if exp then stmt-sequence else-part'
+else-part' -> else stmt-sequence end
+else-part' -> end
+repeat-stmt -> repeat stmt-sequence until exp
+assign-stmt -> identifier := exp
+read-stmt -> read identifier
+write-stmt -> write exp
+exp -> simple-exp cmp-exp'
+cmp-exp' -> comparison-op simple-exp
+cmp-exp' -> $
+comparison-op -> <
+comparison-op -> =
+simple-exp -> term simple-exp'
+simple-exp' -> addop term simple-exp'
+simple-exp' -> $
+addop -> +
+addop -> -
+term -> factor term'
+term' -> mulop factor term'
+term' -> $
+mulop -> *
+mulop -> /
+factor -> ( exp )
+factor -> number
+factor -> identifier
+20
+program
+stmt-sequence
+stmt'
+statement
+if-stmt
+else-part'
+repeat-stmt
+assign-stmt
+read-stmt
+write-stmt
+exp
+cmp-exp'
+comparison-op
+simple-exp
+simple-exp'
+addop
+term
+term'
+mulop
+factor
+21
+if
+then
+else
+end
+repeat
+until
+read
+write
+identifier
+1
+:=
+=
+<
++
+-
+*
+/
+(
+)
+;

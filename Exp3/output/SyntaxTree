@@ -1,0 +1,11 @@
+|program
+		|stmt-sequence
+				|statement
+						|read-stmt
+								|reserved word: read
+								|ID, name= x
+				|stmt'
+						|;
+						|statement
+						|stmt'
+		|EOF
