@@ -1,0 +1,70 @@
+abbabbabb:
+NFA ACCEPT
+DFA ACCEPT
+minDFA ACCEPT
+
+babbbaabbababba:
+NFA ACCEPT
+DFA ACCEPT
+minDFA ACCEPT
+
+aaabbaabbabbbbbbabbba:
+NFA ACCEPT
+DFA ACCEPT
+minDFA ACCEPT
+
+bababbaabaababbaabbababbaba:
+NFA ACCEPT
+DFA ACCEPT
+minDFA ACCEPT
+
+bbbaabbbbabbabbabbbabaabbbabbbbba:
+NFA ACCEPT
+DFA ACCEPT
+minDFA ACCEPT
+
+ba:
+NFA FAIL
+DFA FAIL
+minDFA FAIL
+
+aaaaaaababaaa:
+NFA FAIL
+DFA FAIL
+minDFA FAIL
+
+babbaaa:
+NFA ACCEPT
+DFA ACCEPT
+minDFA ACCEPT
+
+aabaab:
+NFA FAIL
+DFA FAIL
+minDFA FAIL
+
+bbaaabbbbbaa:
+NFA ACCEPT
+DFA ACCEPT
+minDFA ACCEPT
+
+b:
+NFA FAIL
+DFA FAIL
+minDFA FAIL
+
+babbaaabbbba:
+NFA ACCEPT
+DFA ACCEPT
+minDFA ACCEPT
+
+ab:
+NFA FAIL
+DFA FAIL
+minDFA FAIL
+
+bbbabaa:
+NFA FAIL
+DFA FAIL
+minDFA FAIL
+
